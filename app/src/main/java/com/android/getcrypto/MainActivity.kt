@@ -2,7 +2,9 @@ package com.android.getcrypto
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +19,9 @@ class MainActivity : AppCompatActivity() {
                 ViewModelProvider.AndroidViewModelFactory(application)
         )[CoinViewModel::class.java]
         viewModel.loadData()
+        viewModel.priceList.observe(this, Observer {
+            Log.d("Test", "Success in activity: $it")
+        })
     }
 
 
