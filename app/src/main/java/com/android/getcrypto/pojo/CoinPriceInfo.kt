@@ -3,6 +3,8 @@ package com.android.getcrypto.pojo
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.android.getcrypto.api.ApiFactory.BASE_IMAGE_URL
+import com.android.getcrypto.utils.convertTimestampToTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -35,7 +37,7 @@ data class CoinPriceInfo (
 
     @SerializedName("LASTUPDATE")
     @Expose
-    val lastUpdate: Int?,
+    val lastUpdate: Long?,
 
     @SerializedName("MEDIAN")
     @Expose
@@ -188,4 +190,12 @@ data class CoinPriceInfo (
     @SerializedName("IMAGEURL")
     @Expose
     val imageUrl: String?
-)
+) {
+    fun getFormattedTime(): String{
+        return convertTimestampToTime(lastUpdate)
+    }
+
+    fun getFullImageUrl(): String{
+        return BASE_IMAGE_URL + imageUrl
+    }
+}
