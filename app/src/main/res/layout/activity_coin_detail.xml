@@ -14,13 +14,14 @@
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/coin_logo" />
 
     <TextView
         android:id="@+id/textViewFromSymbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BTC"
+        tools:text="BTC"
         android:textSize="24sp"
         android:textColor="@color/teal_700"
         app:layout_constraintEnd_toStartOf="@id/textViewSlash"
@@ -31,7 +32,7 @@
         android:id="@+id/textViewToSymbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="USD"
+        tools:text="USD"
         android:textSize="24sp"
         android:textColor="@color/purple_500"
         app:layout_constraintStart_toEndOf="@id/textViewSlash"
@@ -42,7 +43,7 @@
         android:id="@+id/textViewSlash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" / "
+        android:text="@string/slash"
         android:textSize="24sp"
         android:layout_margin="20sp"
         app:layout_constraintTop_toBottomOf="@id/imageViewCoinLogo"
@@ -55,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginStart="8dp"
-        android:text="Цена: "
+        android:text="@string/price"
         android:textSize="18sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginStart="8dp"
-        android:text="5000.55"
+        tools:text="5000.55"
         android:textSize="18sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/textViewPrice"
@@ -86,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Минимум за день: "
+        android:text="@string/day_min"
         android:textSize="18sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +100,7 @@
         android:textSize="18sp"
         android:layout_margin="8dp"
         android:textColor="@color/red"
-        android:text="5050.5"
+        tools:text="5050.5"
         app:layout_constraintTop_toBottomOf="@id/dividerPrice"
         app:layout_constraintStart_toEndOf="@id/textViewDayMin"/>
 
@@ -116,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Максимум за день: "
+        android:text="@string/day_max"
         android:textSize="18sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +130,7 @@
         android:textSize="18sp"
         android:layout_margin="8dp"
         android:textColor="@color/green"
-        android:text="7070.7"
+        tools:text="7070.7"
         app:layout_constraintTop_toBottomOf="@id/dividerDayMin"
         app:layout_constraintStart_toEndOf="@id/textViewDayMax"/>
 
@@ -146,7 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Последняя сделка: "
+        android:text="@string/last_deal_text"
         android:textSize="18sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -159,7 +160,7 @@
         android:textSize="18sp"
         android:layout_margin="8dp"
         android:textColor="@color/black"
-        android:text="Bitfinex"
+        tools:text="Bitfinex"
         app:layout_constraintTop_toBottomOf="@id/dividerDayMax"
         app:layout_constraintStart_toEndOf="@id/textViewLastDeal"/>
 
@@ -176,7 +177,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Обновлено: "
+        android:text="@string/last_time_update"
         android:textSize="18sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -189,7 +190,7 @@
         android:textSize="18sp"
         android:layout_margin="8dp"
         android:textColor="@color/black"
-        android:text="23:00:00"
+        tools:text="23:00:00"
         app:layout_constraintTop_toBottomOf="@id/dividerLastDeal"
         app:layout_constraintStart_toEndOf="@id/textViewUpdate"/>
 
