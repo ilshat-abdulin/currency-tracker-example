@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CoinDetailActivity">
+
+    <ImageView
+        android:id="@+id/imageViewCoinLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="16dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewFromSymbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BTC"
+        android:textSize="24sp"
+        android:textColor="@color/teal_700"
+        app:layout_constraintEnd_toStartOf="@id/textViewSlash"
+        app:layout_constraintTop_toTopOf="@id/textViewSlash"
+        app:layout_constraintBottom_toBottomOf="@id/textViewSlash"/>
+
+    <TextView
+        android:id="@+id/textViewToSymbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="USD"
+        android:textSize="24sp"
+        android:textColor="@color/purple_500"
+        app:layout_constraintStart_toEndOf="@id/textViewSlash"
+        app:layout_constraintTop_toTopOf="@id/textViewSlash"
+        app:layout_constraintBottom_toBottomOf="@id/textViewSlash"/>
+
+    <TextView
+        android:id="@+id/textViewSlash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" / "
+        android:textSize="24sp"
+        android:layout_margin="20sp"
+        app:layout_constraintTop_toBottomOf="@id/imageViewCoinLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/textViewPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
+        android:text="Цена: "
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewSlash"/>
+
+    <TextView
+        android:id="@+id/textViewCurrentPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
+        android:text="5000.55"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@id/textViewPrice"
+        app:layout_constraintTop_toBottomOf="@id/textViewSlash"/>
+
+    <View
+        android:id="@+id/dividerPrice"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="8dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/textViewPrice" />
+
+    <TextView
+        android:id="@+id/textViewDayMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Минимум за день: "
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividerPrice"/>
+
+    <TextView
+        android:id="@+id/textViewMinPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        android:textColor="@color/red"
+        android:text="5050.5"
+        app:layout_constraintTop_toBottomOf="@id/dividerPrice"
+        app:layout_constraintStart_toEndOf="@id/textViewDayMin"/>
+
+    <View
+        android:id="@+id/dividerDayMin"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="8dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/textViewDayMin" />
+
+    <TextView
+        android:id="@+id/textViewDayMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Максимум за день: "
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividerDayMin"/>
+
+    <TextView
+        android:id="@+id/textViewMaxPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        android:textColor="@color/green"
+        android:text="7070.7"
+        app:layout_constraintTop_toBottomOf="@id/dividerDayMin"
+        app:layout_constraintStart_toEndOf="@id/textViewDayMax"/>
+
+    <View
+        android:id="@+id/dividerDayMax"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="8dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/textViewDayMax" />
+
+    <TextView
+        android:id="@+id/textViewLastDeal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Последняя сделка: "
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividerDayMax"/>
+
+    <TextView
+        android:id="@+id/textViewMarketLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        android:textColor="@color/black"
+        android:text="Bitfinex"
+        app:layout_constraintTop_toBottomOf="@id/dividerDayMax"
+        app:layout_constraintStart_toEndOf="@id/textViewLastDeal"/>
+
+    <View
+        android:id="@+id/dividerLastDeal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="8dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/textViewLastDeal" />
+
+    <TextView
+        android:id="@+id/textViewUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Обновлено: "
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividerLastDeal"/>
+
+    <TextView
+        android:id="@+id/textViewLastUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        android:textColor="@color/black"
+        android:text="23:00:00"
+        app:layout_constraintTop_toBottomOf="@id/dividerLastDeal"
+        app:layout_constraintStart_toEndOf="@id/textViewUpdate"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

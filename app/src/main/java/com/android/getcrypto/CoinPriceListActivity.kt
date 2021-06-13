@@ -1,31 +1,43 @@
 package com.android.getcrypto
 
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.android.getcrypto.adapters.CoinInfoAdapter
+import com.android.getcrypto.pojo.CoinPriceInfo
 
 class CoinPriceListActivity : AppCompatActivity() {
 
     private lateinit var viewModel: CoinViewModel
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coin_price_list)
+
+        val adapter = CoinInfoAdapter(this)
+        adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener{
+            override fun onCoinClick(coinPriceInfo: CoinPriceInfo) {
+                val intent = CoinDetailActivity.newIntent(this@CoinPriceListActivity, coinPriceInfo.fromSymbol)
+                startActivity(intent)
+            }
+        }
+        val recyclerViewCoinPriceListInfo: RecyclerView = findViewById(R.id.recyclerViewCoinPriceListInfo)
+        recyclerViewCoinPriceListInfo.adapter = adapter
+
         viewModel = ViewModelProvider(
                 this,
                 ViewModelProvider.AndroidViewModelFactory(application)
         )[CoinViewModel::class.java]
 
-//        viewModel.priceList.observe(this, Observer {
-//            Log.d("Test", "Success in activity: $it")
-//        })
-
-        viewModel.getDetailInfo("BTC").observe(this, Observer {
-            Log.d("Test", "Success in activity: $it")
+        viewModel.priceList.observe(this, Observer {
+           adapter.coinInfoList = it
         })
+
     }
 
 

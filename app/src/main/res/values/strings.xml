@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Get Crypto</string>
+    <string name="last_time_template">Время последнего обновления: %s</string>
+    <string name="symbols_template">%s / %s</string>
 </resources>
