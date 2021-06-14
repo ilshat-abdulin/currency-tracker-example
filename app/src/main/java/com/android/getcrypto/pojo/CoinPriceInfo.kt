@@ -10,6 +10,8 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "full_price_list")
 data class CoinPriceInfo (
+        //вся информация о ценах
+
     @SerializedName("TYPE")
     @Expose
     val type: String?,

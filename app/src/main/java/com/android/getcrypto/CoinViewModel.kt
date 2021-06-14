@@ -39,10 +39,7 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     db.coinPriceInfoDao().insertPriceList(it)
-                    Log.d("Test", "Success: $it")
-                }, {
-                    Log.d("Test", "Failure: ${it.message}")
-                })
+                }, {})
     }
 
     private fun getPriceListFromRawData(

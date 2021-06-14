@@ -9,31 +9,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.android.getcrypto.databinding.ActivityCoinDetailBinding
 import com.squareup.picasso.Picasso
 
 class CoinDetailActivity : AppCompatActivity() {
 
+    private lateinit var coinDetailBinding:  ActivityCoinDetailBinding
     private lateinit var viewModel: CoinViewModel
-    private lateinit var textViewCurrentPrice: TextView
-    private lateinit var textViewMinPrice: TextView
-    private lateinit var textViewMaxPrice: TextView
-    private lateinit var textViewMarketLabel: TextView
-    private lateinit var textViewLastUpdate: TextView
-    private lateinit var textViewFromSymbol: TextView
-    private lateinit var textViewToSymbol: TextView
-    private lateinit var imageViewCoinLogo: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_coin_detail)
-        textViewCurrentPrice = findViewById(R.id.textViewCurrentPrice)
-        textViewMinPrice = findViewById(R.id.textViewMinPrice)
-        textViewMaxPrice = findViewById(R.id.textViewMaxPrice)
-        textViewMarketLabel = findViewById(R.id.textViewMarketLabel)
-        textViewLastUpdate = findViewById(R.id.textViewLastUpdate)
-        textViewFromSymbol = findViewById(R.id.textViewFromSymbol)
-        textViewToSymbol = findViewById(R.id.textViewToSymbol)
-        imageViewCoinLogo = findViewById(R.id.imageViewCoinLogo)
+        coinDetailBinding = ActivityCoinDetailBinding.inflate(layoutInflater)
+        setContentView(coinDetailBinding.root)
 
         if(!intent.hasExtra(EXTRA_FROM_SYMBOL)){
             finish()
@@ -44,14 +31,14 @@ class CoinDetailActivity : AppCompatActivity() {
 
         if (fromSymbol != null) {
             viewModel.getDetailInfo(fromSymbol).observe(this, Observer {
-                textViewCurrentPrice.text = it.price.toString()
-                textViewMinPrice.text = it.lowDay.toString()
-                textViewMaxPrice.text = it.highDay.toString()
-                textViewMarketLabel.text = it.lastMarket
-                textViewLastUpdate.text = it.getFormattedTime()
-                textViewFromSymbol.text = it.fromSymbol
-                textViewToSymbol.text = it.toSymbol
-                Picasso.get().load(it.getFullImageUrl()).into(imageViewCoinLogo)
+                coinDetailBinding.textViewCurrentPrice.text = it.price.toString()
+                coinDetailBinding.textViewMinPrice.text = it.lowDay.toString()
+                coinDetailBinding.textViewMaxPrice.text = it.highDay.toString()
+                coinDetailBinding.textViewMarketLabel.text = it.lastMarket
+                coinDetailBinding.textViewLastUpdate.text = it.getFormattedTime()
+                coinDetailBinding.textViewFromSymbol.text = it.fromSymbol
+                coinDetailBinding.textViewToSymbol.text = it.toSymbol
+                Picasso.get().load(it.getFullImageUrl()).into(coinDetailBinding.imageViewCoinLogo)
             })
         }
     }

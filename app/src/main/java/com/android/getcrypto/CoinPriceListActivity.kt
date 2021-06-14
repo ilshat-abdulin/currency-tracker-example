@@ -29,8 +29,7 @@ class CoinPriceListActivity : AppCompatActivity() {
         val recyclerViewCoinPriceListInfo: RecyclerView = findViewById(R.id.recyclerViewCoinPriceListInfo)
         recyclerViewCoinPriceListInfo.adapter = adapter
 
-        viewModel = ViewModelProvider(
-                this,
+        viewModel = ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory(application)
         )[CoinViewModel::class.java]
 
