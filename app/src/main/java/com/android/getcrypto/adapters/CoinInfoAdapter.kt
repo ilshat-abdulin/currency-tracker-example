@@ -32,6 +32,7 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
         val symbolsTemplate = context.resources.getString(R.string.symbols_template)
         val lastUpdateTemplate = context.resources.getString(R.string.last_time_template)
 
+        holder.textViewIndex.text = (position+1).toString()
         holder.textViewSymbols.text = String.format(symbolsTemplate, coin.fromSymbol, coin.toSymbol)
         holder.textViewPrice.text = coin.price.toString()
         holder.textViewTimeUpdate.text = String.format(lastUpdateTemplate, coin.getFormattedTime())
@@ -47,6 +48,7 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
 
     inner class CoinInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
+        val textViewIndex: TextView = itemView.findViewById(R.id.textViewIndex)
         val textViewSymbols: TextView = itemView.findViewById(R.id.textViewSymbols)
         val textViewPrice: TextView = itemView.findViewById(R.id.textViewPrice)
         val textViewTimeUpdate: TextView = itemView.findViewById(R.id.textViewTimeUpdate)
