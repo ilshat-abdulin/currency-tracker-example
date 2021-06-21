@@ -1,6 +1,5 @@
 package com.android.getcrypto.pojo
 
-import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.android.getcrypto.api.ApiFactory.BASE_IMAGE_URL
