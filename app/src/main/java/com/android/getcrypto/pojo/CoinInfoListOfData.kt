@@ -3,9 +3,9 @@ package com.android.getcrypto.pojo
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class CoinInfoListOfData (
+data class CoinInfoListOfData(
         //запрос спика популярных валют
-    @SerializedName("Data")
-    @Expose
-    val data: List<Datum>? = null
+        @SerializedName("Data")
+        @Expose
+        val data: List<Datum>? = null
 )

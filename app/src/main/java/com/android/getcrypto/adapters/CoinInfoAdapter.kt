@@ -14,10 +14,10 @@ import com.squareup.picasso.Picasso
 class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
 
     var coinInfoList: List<CoinPriceInfo> = listOf()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     var onCoinClickListener: OnCoinClickListener? = null
 
@@ -32,7 +32,7 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
         val symbolsTemplate = context.resources.getString(R.string.symbols_template)
         val lastUpdateTemplate = context.resources.getString(R.string.last_time_template)
 
-        holder.textViewIndex.text = (position+1).toString()
+        holder.textViewIndex.text = (position + 1).toString()
         holder.textViewSymbols.text = String.format(symbolsTemplate, coin.fromSymbol, coin.toSymbol)
         holder.textViewPrice.text = coin.price.toString()
         holder.textViewTimeUpdate.text = String.format(lastUpdateTemplate, coin.getFormattedTime())
@@ -46,7 +46,7 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
     override fun getItemCount(): Int = coinInfoList.size
 
 
-    inner class CoinInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class CoinInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val textViewIndex: TextView = itemView.findViewById(R.id.textViewIndex)
         val textViewSymbols: TextView = itemView.findViewById(R.id.textViewSymbols)
@@ -57,7 +57,7 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
 
     }
 
-    interface OnCoinClickListener{
+    interface OnCoinClickListener {
         fun onCoinClick(coinPriceInfo: CoinPriceInfo)
     }
 

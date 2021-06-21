@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 
 class CoinDetailActivity : AppCompatActivity() {
 
-    private lateinit var coinDetailBinding:  ActivityCoinDetailBinding
+    private lateinit var coinDetailBinding: ActivityCoinDetailBinding
     private lateinit var viewModel: CoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,15 +22,15 @@ class CoinDetailActivity : AppCompatActivity() {
         coinDetailBinding = ActivityCoinDetailBinding.inflate(layoutInflater)
         setContentView(coinDetailBinding.root)
 
-        if(!intent.hasExtra(EXTRA_FROM_SYMBOL)){
+        if (!intent.hasExtra(EXTRA_FROM_SYMBOL)) {
             finish()
             return
         }
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL)
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))[CoinViewModel::class.java]
 
-        if (fromSymbol != null) {
-            viewModel.getDetailInfo(fromSymbol).observe(this, Observer {
+        fromSymbol?.let {
+            viewModel.getDetailInfo(it).observe(this, Observer {
                 coinDetailBinding.textViewCurrentPrice.text = it.price.toString()
                 coinDetailBinding.textViewMinPrice.text = it.lowDay.toString()
                 coinDetailBinding.textViewMaxPrice.text = it.highDay.toString()
@@ -43,10 +43,10 @@ class CoinDetailActivity : AppCompatActivity() {
         }
     }
 
-    companion object{
+    companion object {
         const val EXTRA_FROM_SYMBOL = "fSym"
 
-        fun newIntent(context: Context, fromSymbol: String): Intent{
+        fun newIntent(context: Context, fromSymbol: String): Intent {
             val intent = Intent(context, CoinDetailActivity::class.java)
             intent.putExtra(EXTRA_FROM_SYMBOL, fromSymbol)
             return intent

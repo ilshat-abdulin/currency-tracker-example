@@ -9,12 +9,12 @@ import com.android.getcrypto.pojo.CoinPriceInfo
 @Database(entities = [CoinPriceInfo::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    companion object{
+    companion object {
         private var db: AppDatabase? = null
         private const val DB_NAME = "main.db"
         private val LOCK = Any()
 
-        fun getInstance(context: Context): AppDatabase{
+        fun getInstance(context: Context): AppDatabase {
             synchronized(LOCK) {
                 db?.let { return it }
                 val instance = Room.databaseBuilder(
@@ -24,9 +24,10 @@ abstract class AppDatabase : RoomDatabase() {
                 db = instance
                 return instance
             }
-            }
         }
+    }
+
     abstract fun coinPriceInfoDao(): CoinPriceInfoDao
 
-    }
+}
 

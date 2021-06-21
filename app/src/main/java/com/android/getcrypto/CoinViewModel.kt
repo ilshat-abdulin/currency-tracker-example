@@ -40,6 +40,7 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
                 .subscribe({
                     db.coinPriceInfoDao().insertPriceList(it)
                 }, {})
+        compositeDisposable.add(disposable)
     }
 
     private fun getPriceListFromRawData(
