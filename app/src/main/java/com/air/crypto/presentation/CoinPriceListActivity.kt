@@ -1,4 +1,4 @@
-package com.air.getcrypto
+package com.air.crypto.presentation
 
 
 import android.os.Bundle
@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.android.getcrypto.R
-import com.air.getcrypto.adapters.CoinInfoAdapter
-import com.air.getcrypto.pojo.CoinPriceInfo
+import com.air.crypto.R
+import com.air.crypto.presentation.adapters.CoinInfoAdapter
+import com.air.crypto.data.network.model.CoinNameDto
 
 class CoinPriceListActivity : AppCompatActivity() {
 
@@ -21,7 +21,7 @@ class CoinPriceListActivity : AppCompatActivity() {
 
         val adapter = CoinInfoAdapter(this)
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
-            override fun onCoinClick(coinPriceInfo: CoinPriceInfo) {
+            override fun onCoinClick(coinPriceInfo: CoinNameDto) {
                 val intent = CoinDetailActivity.newIntent(
                     this@CoinPriceListActivity,
                     coinPriceInfo.fromSymbol

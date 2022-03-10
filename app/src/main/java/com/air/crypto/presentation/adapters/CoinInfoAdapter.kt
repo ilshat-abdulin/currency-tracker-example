@@ -1,4 +1,4 @@
-package com.air.getcrypto.adapters
+package com.air.crypto.presentation.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.android.getcrypto.R
-import com.air.getcrypto.pojo.CoinPriceInfo
+import com.air.crypto.R
+import com.air.crypto.data.network.model.CoinNameDto
 import com.bumptech.glide.Glide
 
 class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
 
-    var coinInfoList: List<CoinPriceInfo> = listOf()
+    var coinInfoList: List<CoinNameDto> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -58,7 +58,7 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
     }
 
     interface OnCoinClickListener {
-        fun onCoinClick(coinPriceInfo: CoinPriceInfo)
+        fun onCoinClick(coinPriceInfo: CoinNameDto)
     }
 
 }

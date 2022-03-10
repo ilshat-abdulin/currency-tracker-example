@@ -1,4 +1,4 @@
-package com.air.getcrypto.utils
+package com.air.crypto.utils
 
 import java.sql.Timestamp
 import java.text.SimpleDateFormat

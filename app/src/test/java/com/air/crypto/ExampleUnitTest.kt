@@ -1,4 +1,4 @@
-package com.android.getcrypto
+package com.air.crypto
 
 import org.junit.Test
 

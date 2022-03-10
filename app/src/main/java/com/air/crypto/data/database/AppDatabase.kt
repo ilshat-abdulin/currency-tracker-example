@@ -1,12 +1,12 @@
-package com.air.getcrypto.database
+package com.air.crypto.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.air.getcrypto.pojo.CoinPriceInfo
+import com.air.crypto.data.network.model.CoinNameDto
 
-@Database(entities = [CoinPriceInfo::class], version = 1, exportSchema = false)
+@Database(entities = [CoinNameDto::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
