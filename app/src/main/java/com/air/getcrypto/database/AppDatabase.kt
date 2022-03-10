@@ -1,10 +1,10 @@
-package com.android.getcrypto.database
+package com.air.getcrypto.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.android.getcrypto.pojo.CoinPriceInfo
+import com.air.getcrypto.pojo.CoinPriceInfo
 
 @Database(entities = [CoinPriceInfo::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
@@ -20,7 +20,8 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                         context,
                         AppDatabase::class.java,
-                        DB_NAME).build()
+                        DB_NAME
+                ).build()
                 db = instance
                 return instance
             }

@@ -1,4 +1,4 @@
-package com.android.getcrypto.utils
+package com.air.getcrypto.utils
 
 import java.sql.Timestamp
 import java.text.SimpleDateFormat

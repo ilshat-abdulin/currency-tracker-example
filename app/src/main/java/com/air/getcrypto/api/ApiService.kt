@@ -1,7 +1,7 @@
-package com.android.getcrypto.api
+package com.air.getcrypto.api
 
-import com.android.getcrypto.pojo.CoinInfoListOfData
-import com.android.getcrypto.pojo.CoinPriceInfoRawData
+import com.air.getcrypto.pojo.CoinInfoListOfData
+import com.air.getcrypto.pojo.CoinPriceInfoRawData
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -12,16 +12,16 @@ interface ApiService {
 
     @GET("top/totalvolfull")
     fun getTopCoinsInfo(
-            @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
-            @Query(QUERY_PARAM_LIMIT) limit: Int = 10,
-            @Query(QUERY_PARAM_TO_SYMBOL) tSym: String = CURRENCY_USD
+        @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
+        @Query(QUERY_PARAM_LIMIT) limit: Int = 10,
+        @Query(QUERY_PARAM_TO_SYMBOL) tSym: String = CURRENCY_USD
     ): Single<CoinInfoListOfData>
 
     @GET("pricemultifull")
     fun getFullPriceList(
-            @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
-            @Query(QUERY_PARAM_FROM_SYMBOLS) fSyms: String,
-            @Query(QUERY_PARAM_TO_SYMBOLS) tSyms: String = CURRENCY_USD
+        @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
+        @Query(QUERY_PARAM_FROM_SYMBOLS) fSyms: String,
+        @Query(QUERY_PARAM_TO_SYMBOLS) tSyms: String = CURRENCY_USD
 
     ): Single<CoinPriceInfoRawData>
 

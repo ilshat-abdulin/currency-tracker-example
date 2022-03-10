@@ -1,4 +1,4 @@
-package com.android.getcrypto.pojo
+package com.air.getcrypto.pojo
 
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose

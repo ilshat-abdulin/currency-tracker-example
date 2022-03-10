@@ -1,4 +1,4 @@
-package com.android.getcrypto.adapters
+package com.air.getcrypto.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.getcrypto.R
-import com.android.getcrypto.pojo.CoinPriceInfo
-import com.squareup.picasso.Picasso
+import com.air.getcrypto.pojo.CoinPriceInfo
+import com.bumptech.glide.Glide
 
 class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
 
@@ -36,7 +36,7 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
         holder.textViewSymbols.text = String.format(symbolsTemplate, coin.fromSymbol, coin.toSymbol)
         holder.textViewPrice.text = coin.price.toString()
         holder.textViewTimeUpdate.text = String.format(lastUpdateTemplate, coin.getFormattedTime())
-        Picasso.get().load(coin.getFullImageUrl()).into(holder.imageViewCoinLogo)
+        Glide.with(context).load(coin.getFullImageUrl()).into(holder.imageViewCoinLogo)
 
         holder.itemView.setOnClickListener {
             onCoinClickListener?.onCoinClick(coin)

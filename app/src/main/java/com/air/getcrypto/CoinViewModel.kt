@@ -1,12 +1,12 @@
-package com.android.getcrypto
+package com.air.getcrypto
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.android.getcrypto.api.ApiFactory
-import com.android.getcrypto.database.AppDatabase
-import com.android.getcrypto.pojo.CoinPriceInfo
-import com.android.getcrypto.pojo.CoinPriceInfoRawData
+import com.air.getcrypto.api.ApiFactory
+import com.air.getcrypto.database.AppDatabase
+import com.air.getcrypto.pojo.CoinPriceInfo
+import com.air.getcrypto.pojo.CoinPriceInfoRawData
 import com.google.gson.Gson
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -43,7 +43,8 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun getPriceListFromRawData(
-            coinPriceInfoRawData: CoinPriceInfoRawData): List<CoinPriceInfo> {
+            coinPriceInfoRawData: CoinPriceInfoRawData
+    ): List<CoinPriceInfo> {
         val result = ArrayList<CoinPriceInfo>()
         val jsonObject = coinPriceInfoRawData.CoinPriceInfoJsonObject ?: return result
         val coinKeySet = jsonObject.keySet()

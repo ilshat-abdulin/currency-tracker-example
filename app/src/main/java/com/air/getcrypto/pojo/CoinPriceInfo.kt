@@ -1,9 +1,9 @@
-package com.android.getcrypto.pojo
+package com.air.getcrypto.pojo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.android.getcrypto.api.ApiFactory.BASE_IMAGE_URL
-import com.android.getcrypto.utils.convertTimestampToTime
+import com.air.getcrypto.api.ApiFactory.BASE_IMAGE_URL
+import com.air.getcrypto.utils.convertTimestampToTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

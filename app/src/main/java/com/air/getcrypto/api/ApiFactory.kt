@@ -1,4 +1,4 @@
-package com.android.getcrypto.api
+package com.air.getcrypto.api
 
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

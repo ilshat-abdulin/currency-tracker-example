@@ -1,4 +1,4 @@
-package com.android.getcrypto
+package com.air.getcrypto
 
 import android.content.Context
 import android.content.Intent
@@ -7,17 +7,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.android.getcrypto.databinding.ActivityCoinDetailBinding
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 
 class CoinDetailActivity : AppCompatActivity() {
 
-    private lateinit var coinDetailBinding: ActivityCoinDetailBinding
+    private lateinit var binding: ActivityCoinDetailBinding
     private lateinit var viewModel: CoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        coinDetailBinding = ActivityCoinDetailBinding.inflate(layoutInflater)
-        setContentView(coinDetailBinding.root)
+        binding = ActivityCoinDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (!intent.hasExtra(EXTRA_FROM_SYMBOL)) {
             finish()
@@ -28,14 +28,14 @@ class CoinDetailActivity : AppCompatActivity() {
 
         fromSymbol?.let {
             viewModel.getDetailInfo(it).observe(this, Observer {
-                coinDetailBinding.textViewCurrentPrice.text = it.price.toString()
-                coinDetailBinding.textViewMinPrice.text = it.lowDay.toString()
-                coinDetailBinding.textViewMaxPrice.text = it.highDay.toString()
-                coinDetailBinding.textViewMarketLabel.text = it.lastMarket
-                coinDetailBinding.textViewLastUpdate.text = it.getFormattedTime()
-                coinDetailBinding.textViewFromSymbol.text = it.fromSymbol
-                coinDetailBinding.textViewToSymbol.text = it.toSymbol
-                Picasso.get().load(it.getFullImageUrl()).into(coinDetailBinding.imageViewCoinLogo)
+                binding.textViewCurrentPrice.text = it.price.toString()
+                binding.textViewMinPrice.text = it.lowDay.toString()
+                binding.textViewMaxPrice.text = it.highDay.toString()
+                binding.textViewMarketLabel.text = it.lastMarket
+                binding.textViewLastUpdate.text = it.getFormattedTime()
+                binding.textViewFromSymbol.text = it.fromSymbol
+                binding.textViewToSymbol.text = it.toSymbol
+                Glide.with(this).load(it.getFullImageUrl()).into(binding.imageViewCoinLogo)
             })
         }
     }
