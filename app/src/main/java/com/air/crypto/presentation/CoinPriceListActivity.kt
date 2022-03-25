@@ -3,16 +3,13 @@ package com.air.crypto.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.air.crypto.R
 import com.air.crypto.databinding.ActivityCoinPriceListBinding
-import com.air.crypto.domain.model.CoinInfo
-import com.air.crypto.presentation.adapters.CoinInfoAdapter
+import com.air.crypto.presentation.adapters.CoinListAdapter
 import javax.inject.Inject
 
 class CoinPriceListActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: CoinViewModel
+    private lateinit var coinInfoAdapter: CoinListAdapter
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -25,33 +22,51 @@ class CoinPriceListActivity : AppCompatActivity() {
         (application as CryptoApp).component
     }
 
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this,
+            viewModelFactory
+        )[CoinViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
 
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val adapter = CoinInfoAdapter(this)
+        setRecyclerView()
+        observeViewModel()
+        setClickListener()
 
-        adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
-            override fun onCoinClick(coinPriceInfo: CoinInfo) {
-                val intent = CoinDetailActivity.newIntent(
-                    this@CoinPriceListActivity,
-                    coinPriceInfo.fromSymbol
-                )
-                startActivity(intent)
-            }
+        binding.root.setOnRefreshListener {
+            viewModel.refresh()
         }
+    }
 
-        binding.recyclerViewCoinPriceListInfo.adapter = adapter
+    private fun setRecyclerView() {
+        coinInfoAdapter = CoinListAdapter()
+        with(binding.coinListRecyclerView) {
+            adapter = coinInfoAdapter
+            recycledViewPool.setMaxRecycledViews(0, CoinListAdapter.MAX_POOL_SIZE)
+            itemAnimator = null
+        }
+    }
 
-        viewModel = ViewModelProvider(
-            this,
-            viewModelFactory
-        )[CoinViewModel::class.java]
-
+    private fun observeViewModel() {
         viewModel.coinInfoList.observe(this) {
-            adapter.coinInfoList = it
+            coinInfoAdapter.submitList(it)
+            binding.root.isRefreshing = false
+        }
+    }
+
+    private fun setClickListener() {
+        coinInfoAdapter.onCoinClickListener =  {
+            val intent = CoinDetailActivity.newIntent(
+                this@CoinPriceListActivity,
+                it.fromSymbol
+            )
+            startActivity(intent)
         }
     }
 }

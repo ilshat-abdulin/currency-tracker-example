@@ -19,4 +19,8 @@ class CoinViewModel @Inject constructor(
     init {
         loadDataUseCase()
     }
+
+    fun refresh() {
+        loadDataUseCase()
+    }
 }

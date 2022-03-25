@@ -17,4 +17,7 @@ interface CoinPriceInfoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPriceList(priceList: List<CoinInfoDbModel>)
+
+    @Query("DELETE FROM full_price_list")
+    suspend fun clearPriceList()
 }

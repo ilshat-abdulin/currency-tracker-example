@@ -15,17 +15,23 @@ class CoinDetailActivity : AppCompatActivity() {
         ActivityCoinDetailBinding.inflate(layoutInflater)
     }
 
-    private lateinit var viewModel: CoinViewModel
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
     private val component by lazy {
         (application as CryptoApp).component
     }
 
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this,
+            viewModelFactory
+        )[CoinViewModel::class.java]
+    }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
@@ -34,10 +40,6 @@ class CoinDetailActivity : AppCompatActivity() {
             return
         }
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL)
-        viewModel = ViewModelProvider(
-            this,
-            viewModelFactory
-        )[CoinViewModel::class.java]
 
         fromSymbol?.let {
             viewModel.getDetailInfo(it).observe(this) {

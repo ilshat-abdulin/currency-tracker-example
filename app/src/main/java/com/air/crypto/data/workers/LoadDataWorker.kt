@@ -30,6 +30,7 @@ class LoadDataWorker(
                 val dbModelList = coinInfoDtoList.map { mapper.mapDtoToDbModel(it) }
                 coinInfoDao.insertPriceList(dbModelList)
             } catch (e: Exception) {
+
             }
             delay(10000)
         }
