@@ -23,6 +23,7 @@ jobs:
         - name: resource-test-android
 
         run:
+          dir: resource-test-android
           path: ./gradlew
           args:
           - 'clean'
