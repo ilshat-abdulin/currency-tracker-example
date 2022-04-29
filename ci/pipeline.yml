@@ -3,16 +3,7 @@ resources:
   - name: resource-test-android
     type: git
     source:
-      uri: git@github.com:ilshat-abdulin/cryptocurrency-browser.git
-      branch: master
-      private_key: |
-       -----BEGIN OPENSSH PRIVATE KEY-----
-       b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-       QyNTUxOQAAACDse3kp2XB42Ls0sZBldAGYZstBhaz+KWfJQnPTeTz5lgAAAKCUIthclCLY
-       XAAAAAtzc2gtZWQyNTUxOQAAACDse3kp2XB42Ls0sZBldAGYZstBhaz+KWfJQnPTeTz5lg
-       AAAEAGSglSgrxa2sRc+9zslqejwCd5K9hSgYxCC4bEIWnQOex7eSnZcHjYuzSxkGV0AZhm
-       y0GFrP4pZ8lCc9N5PPmWAAAAGGFiZHVsaW4uaWxzaGF0QGdtYWlsLmNvbQECAwQF
-       -----END OPENSSH PRIVATE KEY-----
+      uri: https://github.com/ilshat-abdulin/cryptocurrency-browser
 
 jobs:
   - name: job-test-android
@@ -26,7 +17,7 @@ jobs:
         platform: linux
         image_resource:
             type: registry-image
-            source: { repository: "androidsdk/android-31", tag: "latest" }
+            source: { repository: gfx2015/android }
 
         inputs:
         - name: resource-test-android
