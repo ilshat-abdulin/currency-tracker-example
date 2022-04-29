@@ -3,7 +3,7 @@ resources:
   - name: resource-test-android
     type: git
     source:
-      uri: https://github.com/ilshat-abdulin/cryptocurrency-browser.git
+      uri: https://github.com/ilshat-abdulin/cryptocurrency-browser
       branch: master
 
 jobs:
