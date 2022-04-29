@@ -1,0 +1,32 @@
+resources:
+
+  - name: resource-test-android
+    type: git
+    source:
+      uri: https://github.com/ilshat-abdulin/cryptocurrency-browser.git
+      branch: master
+
+jobs:
+  - name: job-test-android
+    plan:
+
+    - get: resource-test-android
+      trigger: true
+
+    - task: build-project
+      config:
+        platform: linux
+        image_resource:
+            type: docker-image
+            source: { repository: "androidsdk/android-31", tag: "latest" }
+
+        inputs:
+        - name: resource-test-android
+
+        run:
+          path: ./gradlew
+          args:
+          - 'clean'
+          - 'assembleDebug'
+          - '--info'
+          - '--stacktrace'
