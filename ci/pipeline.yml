@@ -13,7 +13,7 @@ jobs:
     - get: resource-test-android
       trigger: true
 
-    - task: build-project
+    - task: "build-project"
       config:
         platform: linux
         image_resource:
