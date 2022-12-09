@@ -7,4 +7,7 @@ data class CoinNameDto(
     @SerializedName("Name")
     @Expose
     val name: String? = null,
+    @SerializedName("FullName")
+    @Expose
+    val fullName: String? = null,
 )

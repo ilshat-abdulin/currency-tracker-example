@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class CoinInfoMapper @Inject constructor(){
 
-    fun mapDtoToDbModel(dto: CoinInfoDto) = CoinInfoDbModel(
+    fun mapDtoToDbModel(dto: CoinInfoDto, fullName: String) = CoinInfoDbModel(
         fromSymbol = dto.fromSymbol,
         toSymbol = dto.toSymbol,
         price = dto.price,
@@ -21,13 +21,20 @@ class CoinInfoMapper @Inject constructor(){
         highDay = dto.highDay,
         lowDay = dto.lowDay,
         lastMarket = dto.lastMarket,
-        imageUrl = BASE_IMAGE_URL + dto.imageUrl
+        imageUrl = BASE_IMAGE_URL + dto.imageUrl,
+        fullName = fullName
     )
 
     fun mapNamesListToString(namesListDto: CoinNamesListDto): String {
         return namesListDto.names?.map {
             it.coinName?.name
         }?.joinToString(",") ?: ""
+    }
+
+    fun mapNamesListToMap(namesListDto: CoinNamesListDto): Map<String?, String?>? {
+        return namesListDto.names?.associate {
+            it.coinName?.name to it.coinName?.fullName
+        }
     }
 
     fun mapDbModelToEntity(dbModel: CoinInfoDbModel) = CoinInfo(
@@ -38,7 +45,8 @@ class CoinInfoMapper @Inject constructor(){
         highDay = dbModel.highDay,
         lowDay = dbModel.lowDay,
         lastMarket = dbModel.lastMarket,
-        imageUrl = dbModel.imageUrl
+        imageUrl = dbModel.imageUrl,
+        fullName = dbModel.fullName
     )
 
     fun mapJsonContainerToListCoinInfo(jsonContainer: CoinInfoJsonContainerDto): List<CoinInfoDto> {

@@ -10,6 +10,8 @@ import com.air.crypto.data.mappers.CoinInfoMapper
 import com.air.crypto.data.workers.LoadDataWorker
 import com.air.crypto.domain.CoinRepository
 import com.air.crypto.domain.model.CoinInfo
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CoinRepositoryImpl @Inject constructor(
@@ -18,7 +20,7 @@ class CoinRepositoryImpl @Inject constructor(
     private val application: Application
 ) : CoinRepository {
 
-    override fun getCoinInfoList(): LiveData<List<CoinInfo>> {
+    override fun getCoinInfoList(): Flow<List<CoinInfo>> {
         return coinPriceInfoDao.getPriceList().map {
             it.map { model ->
                 mapper.mapDbModelToEntity(model)

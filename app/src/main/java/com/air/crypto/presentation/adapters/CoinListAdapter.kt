@@ -1,48 +1,55 @@
 package com.air.crypto.presentation.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.air.crypto.R
+import com.air.crypto.databinding.ItemCoinInfoBinding
 import com.air.crypto.domain.model.CoinInfo
 import com.bumptech.glide.Glide
 
-class CoinListAdapter : ListAdapter<CoinInfo, CoinViewHolder>(CoinDiffCallback()) {
+class CoinListAdapter(private val onCoinClickListener: (CoinInfo) -> Unit) :
+    ListAdapter<CoinInfo, CoinListAdapter.CoinViewHolder>(CoinDiffCallback()) {
 
-    lateinit var context: Context
-    var onCoinClickListener: ((CoinInfo) -> Unit)? = null
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
-
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_coin_info, parent, false)
-        context = parent.context
-        return CoinViewHolder(view)
-    }
+    override fun onCreateViewHolder(
+        parent: ViewGroup, viewType: Int
+    ) = CoinViewHolder(
+        binding = ItemCoinInfoBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        ),
+        onCoinClickListener = onCoinClickListener
+    )
 
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
-        val coin = getItem(position)
+        holder.bind(getItem(position))
+    }
 
-        val symbolsTemplate = context.resources.getString(R.string.symbols_template)
-        val lastUpdateTemplate = context.resources.getString(R.string.last_time_template)
+    inner class CoinViewHolder(
+        private val binding: ItemCoinInfoBinding,
+        private val onCoinClickListener: (CoinInfo) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(coinInfo: CoinInfo) {
+            with(binding) {
+                val context = root.context
+                val symbolsTemplate = context.resources.getString(R.string.symbols_template)
+                val lastUpdateTemplate = context.resources.getString(R.string.last_time_template)
 
-        holder.textViewIndex.text = (position + 1).toString()
-        holder.textViewSymbols.text = String.format(symbolsTemplate, coin.fromSymbol, coin.toSymbol)
-        holder.textViewPrice.text = coin.price.toString()
-        holder.textViewTimeUpdate.text = String.format(lastUpdateTemplate, coin.lastUpdate)
-        Glide.with(context).load(coin.imageUrl).into(holder.imageViewCoinLogo)
+                textViewName.text = coinInfo.fromSymbol
+                textViewFullName.text = coinInfo.fullName
+                textViewPrice.text = String.format(symbolsTemplate, "$", coinInfo.price)
+                textViewPrice.text = when(coinInfo.toSymbol) {
+                    "USD" -> String.format(symbolsTemplate, "$", coinInfo.price)
+                    else -> { coinInfo.price }
+                }
+                textViewTimeUpdate.text = String.format(lastUpdateTemplate, coinInfo.lastUpdate)
+                Glide.with(context).load(coinInfo.imageUrl).into(imageViewCoinLogo)
 
-        holder.itemView.setOnClickListener {
-            onCoinClickListener?.invoke(coin)
+                itemView.setOnClickListener { onCoinClickListener.invoke(coinInfo) }
+            }
         }
-    }
-
-    override fun onViewRecycled(holder: CoinViewHolder) {
-        super.onViewRecycled(holder)
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return 0
     }
 
     companion object {

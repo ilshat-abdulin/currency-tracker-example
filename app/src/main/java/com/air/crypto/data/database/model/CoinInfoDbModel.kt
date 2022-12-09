@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class CoinInfoDbModel(
     @PrimaryKey
     val fromSymbol: String,
+    val fullName: String,
     val toSymbol: String?,
     val price: String?,
     val lastUpdate: Long?,

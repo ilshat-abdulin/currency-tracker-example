@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">CryptoCurrencyApp</string>
+    <string name="app_name">CurrencyTracker</string>
     <string name="last_time_template">Время последнего обновления: %s</string>
-    <string name="symbols_template">%s - %s</string>
+    <string name="symbols_template">%s %s</string>
     <string name="price">Цена:</string>
     <string name="day_min">Минимум за день:</string>
     <string name="day_max">Максимум за день:</string>
