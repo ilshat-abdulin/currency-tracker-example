@@ -4,195 +4,184 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.air.crypto.presentation.CoinDetailFragment">
+    tools:context="com.air.crypto.presentation.coin_detail.CoinDetailFragment">
 
     <ImageView
+        android:id="@+id/imageViewBackFromDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="16dp"
+        android:src="@drawable/ic_baseline_arrow_back_ios_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
+
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageViewCoinLogo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="16dp"
-        android:src="@mipmap/ic_launcher"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        android:clickable="true"
+        android:contentDescription="@string/coin_logo"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/coin_logo" />
+        app:shapeAppearanceOverlay="@style/roundImageView"
+        app:srcCompat="@drawable/disk" />
 
     <TextView
-        android:id="@+id/textViewFromSymbol"
+        android:id="@+id/textViewCoinFullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="BTC "
-        android:textSize="24sp"
-        android:textColor="@color/teal_700"
-        app:layout_constraintEnd_toStartOf="@id/textViewSlash"
-        app:layout_constraintTop_toTopOf="@id/textViewSlash"
-        app:layout_constraintBottom_toBottomOf="@id/textViewSlash"/>
-
-    <TextView
-        android:id="@+id/textViewToSymbol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text=" USD"
-        android:textSize="24sp"
-        android:textColor="@color/purple_500"
-        app:layout_constraintStart_toEndOf="@id/textViewSlash"
-        app:layout_constraintTop_toTopOf="@id/textViewSlash"
-        app:layout_constraintBottom_toBottomOf="@id/textViewSlash"/>
-
-    <TextView
-        android:id="@+id/textViewSlash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/slash"
-        android:textSize="24sp"
-        android:layout_margin="20sp"
-        app:layout_constraintTop_toBottomOf="@id/imageViewCoinLogo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/textViewPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/price"
-        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:paddingBottom="4dp"
         android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewSlash"/>
+        app:layout_constraintTop_toBottomOf="@id/imageViewCoinLogo"
+        tools:text="Bitcoin" />
+
+    <TextView
+        android:id="@+id/textViewCoinName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewCoinFullName"
+        tools:text="BTC" />
+
+    <TextView
+        android:id="@+id/textViewPriceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/price"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/coinDetailGuideline"
+        app:layout_constraintTop_toBottomOf="@id/textViewCoinName" />
 
     <TextView
         android:id="@+id/textViewCurrentPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="8dp"
-        tools:text="5000.55"
-        android:textSize="18sp"
         android:textColor="@color/black"
-        app:layout_constraintStart_toEndOf="@id/textViewPrice"
-        app:layout_constraintTop_toBottomOf="@id/textViewSlash"/>
-
-    <View
-        android:id="@+id/dividerPrice"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="8dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/textViewPrice" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
+        app:layout_constraintTop_toTopOf="@+id/textViewPriceTitle"
+        tools:text="5000.55" />
 
     <TextView
-        android:id="@+id/textViewDayMin"
+        android:id="@+id/textViewMinPerDayTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/day_min"
-        android:textSize="18sp"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dividerPrice"/>
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/coinDetailGuideline"
+        app:layout_constraintTop_toBottomOf="@id/textViewPriceTitle" />
 
     <TextView
-        android:id="@+id/textViewMinPrice"
+        android:id="@+id/textViewMinPerDayPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
         android:textColor="@color/red"
-        tools:text="5050.5"
-        app:layout_constraintTop_toBottomOf="@id/dividerPrice"
-        app:layout_constraintStart_toEndOf="@id/textViewDayMin"/>
-
-    <View
-        android:id="@+id/dividerDayMin"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="8dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/textViewDayMin" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
+        app:layout_constraintTop_toTopOf="@id/textViewMinPerDayTitle"
+        tools:text="5050.5" />
 
     <TextView
-        android:id="@+id/textViewDayMax"
+        android:id="@+id/textViewMaxPerDayTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/day_max"
-        android:textSize="18sp"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dividerDayMin"/>
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/coinDetailGuideline"
+        app:layout_constraintTop_toBottomOf="@id/textViewMinPerDayTitle" />
 
     <TextView
-        android:id="@+id/textViewMaxPrice"
+        android:id="@+id/textViewMaxPerDayPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
         android:textColor="@color/green"
-        tools:text="7070.7"
-        app:layout_constraintTop_toBottomOf="@id/dividerDayMin"
-        app:layout_constraintStart_toEndOf="@id/textViewDayMax"/>
-
-    <View
-        android:id="@+id/dividerDayMax"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="8dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/textViewDayMax" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
+        app:layout_constraintTop_toTopOf="@id/textViewMaxPerDayTitle"
+        tools:text="7070.7" />
 
     <TextView
-        android:id="@+id/textViewLastDeal"
+        android:id="@+id/textViewLastDealTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/last_deal_text"
-        android:textSize="18sp"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dividerDayMax"/>
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/coinDetailGuideline"
+        app:layout_constraintTop_toBottomOf="@id/textViewMaxPerDayTitle" />
 
     <TextView
-        android:id="@+id/textViewMarketLabel"
+        android:id="@+id/textViewLastDealMarket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/purple_700"
         android:textSize="18sp"
-        android:layout_margin="8dp"
-        android:textColor="@color/black"
-        tools:text="Bitfinex"
-        app:layout_constraintTop_toBottomOf="@id/dividerDayMax"
-        app:layout_constraintStart_toEndOf="@id/textViewLastDeal"/>
-
-    <View
-        android:id="@+id/dividerLastDeal"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="8dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/textViewLastDeal" />
+        app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
+        app:layout_constraintTop_toTopOf="@id/textViewLastDealTitle"
+        tools:text="Bitfinex" />
 
     <TextView
-        android:id="@+id/textViewUpdate"
+        android:id="@+id/textViewUpdateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/last_time_update"
-        android:textSize="18sp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/last_time_template"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dividerLastDeal"/>
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/coinDetailGuideline"
+        app:layout_constraintTop_toBottomOf="@id/textViewLastDealTitle" />
 
     <TextView
-        android:id="@+id/textViewLastUpdate"
+        android:id="@+id/textViewUpdateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
         android:textColor="@color/black"
-        tools:text="23:00:00"
-        app:layout_constraintTop_toBottomOf="@id/dividerLastDeal"
-        app:layout_constraintStart_toEndOf="@id/textViewUpdate"/>
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
+        app:layout_constraintTop_toTopOf="@id/textViewUpdateTitle"
+        tools:text="09:32:55" />
 
-
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/coinDetailGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

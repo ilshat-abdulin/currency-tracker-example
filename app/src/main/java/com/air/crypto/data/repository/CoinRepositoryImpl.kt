@@ -7,6 +7,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.air.crypto.data.database.CoinPriceInfoDao
 import com.air.crypto.data.mappers.CoinInfoMapper
+import com.air.crypto.data.network.ApiService
 import com.air.crypto.data.workers.LoadDataWorker
 import com.air.crypto.domain.CoinRepository
 import com.air.crypto.domain.model.CoinInfo
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class CoinRepositoryImpl @Inject constructor(
     private val mapper: CoinInfoMapper,
     private val coinPriceInfoDao: CoinPriceInfoDao,
-    private val application: Application
+    private val application: Application,
+    private val apiService: ApiService
 ) : CoinRepository {
 
     override fun getCoinInfoList(): Flow<List<CoinInfo>> {
@@ -28,10 +30,14 @@ class CoinRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getCoinInfo(fromSymbol: String): LiveData<CoinInfo> {
+    override fun getCoinInfo(fromSymbol: String): Flow<CoinInfo> {
         return coinPriceInfoDao.getPriceInfoAboutCoin(fromSymbol).map {
              mapper.mapDbModelToEntity(it)
         }
+    }
+
+    override suspend fun getCoinHistory(fromSymbol: String) {
+        apiService.getCoinHistory(fromSymbol)
     }
 
     override fun loadData() {

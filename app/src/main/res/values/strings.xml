@@ -1,12 +1,11 @@
 <resources>
-    <string name="app_name">CurrencyTracker</string>
-    <string name="last_time_template">Время последнего обновления: %s</string>
+    <string name="app_name">Cryptocurrency Tracker</string>
+    <string name="last_time_template">Last update time:</string>
     <string name="symbols_template">%s %s</string>
-    <string name="price">Цена:</string>
-    <string name="day_min">Минимум за день:</string>
-    <string name="day_max">Максимум за день:</string>
-    <string name="last_deal_text">Последняя сделка:</string>
-    <string name="last_time_update">Обновлено:</string>
-    <string name="coin_logo">Логотип криптовалюты</string>
+    <string name="price">Price:</string>
+    <string name="day_min">Min per day:</string>
+    <string name="day_max">Max per day:</string>
+    <string name="last_deal_text">Last deal:</string>
+    <string name="coin_logo">Cryptocurrency logo</string>
     <string name="slash">/</string>
 </resources>

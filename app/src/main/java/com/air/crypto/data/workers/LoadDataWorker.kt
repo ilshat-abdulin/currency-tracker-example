@@ -1,28 +1,20 @@
 package com.air.crypto.data.workers
 
 import android.content.Context
-import android.util.Log
-import androidx.work.CoroutineWorker
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkerParameters
-import com.air.crypto.data.database.AppDatabase
-import com.air.crypto.data.database.model.CoinInfoDbModel
+import androidx.work.*
+import com.air.crypto.data.database.CoinPriceInfoDao
 import com.air.crypto.data.mappers.CoinInfoMapper
-import com.air.crypto.data.network.ApiFactory
-import kotlinx.coroutines.Dispatchers
+import com.air.crypto.data.network.ApiService
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import javax.inject.Inject
 
 class LoadDataWorker(
     context: Context,
     workerParameters: WorkerParameters,
+    private val coinInfoDao: CoinPriceInfoDao,
+    private val apiService: ApiService,
+    private val mapper: CoinInfoMapper
 ) : CoroutineWorker(context, workerParameters) {
-
-    private val coinInfoDao = AppDatabase.getInstance(context).coinPriceInfoDao()
-    private val apiService = ApiFactory.apiService
-
-    private val mapper = CoinInfoMapper()
 
     override suspend fun doWork(): Result {
         while (true) {
@@ -32,7 +24,12 @@ class LoadDataWorker(
                 val namesMap = mapper.mapNamesListToMap(topCoins).orEmpty()
                 val jsonContainer = apiService.getFullPriceList(fSyms = fSyms)
                 val coinInfoDtoList = mapper.mapJsonContainerToListCoinInfo(jsonContainer)
-                val dbModelList = coinInfoDtoList.map { mapper.mapDtoToDbModel(it, namesMap[it.fromSymbol] ?: "") }
+                val dbModelList = coinInfoDtoList.map {
+                    mapper.mapDtoToDbModel(
+                        it,
+                        namesMap[it.fromSymbol] ?: ""
+                    )
+                }
                 coinInfoDao.insertPriceList(dbModelList)
             } catch (e: Exception) {
 
@@ -46,7 +43,31 @@ class LoadDataWorker(
         const val NAME = "LoadDataWorker"
 
         fun makeRequest(): OneTimeWorkRequest {
-            return OneTimeWorkRequestBuilder<LoadDataWorker>().build()
+            return OneTimeWorkRequestBuilder<LoadDataWorker>().setConstraints(
+                Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+            ).build()
+        }
+    }
+
+    class Factory @Inject constructor(
+        private val coinInfoDao: CoinPriceInfoDao,
+        private val apiService: ApiService,
+        private val mapper: CoinInfoMapper
+    ) : ChildWorkerFactory {
+
+        override fun create(
+            context: Context,
+            workerParameters: WorkerParameters
+        ): ListenableWorker {
+            return LoadDataWorker(
+                context,
+                workerParameters,
+                coinInfoDao,
+                apiService,
+                mapper
+            )
         }
     }
 }

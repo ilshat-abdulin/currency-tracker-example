@@ -1,4 +1,4 @@
-package com.air.crypto.presentation
+package com.air.crypto.presentation.coin_list
 
 import android.os.Bundle
 import android.view.View
@@ -9,9 +9,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.air.crypto.R
 import com.air.crypto.databinding.FragmentCoinListBinding
 import com.air.crypto.domain.model.CoinInfo
-import com.air.crypto.presentation.adapters.CoinListAdapter
+import com.air.crypto.presentation.CryptoApp
+import com.air.crypto.presentation.ViewModelFactory
+import com.air.crypto.presentation.coin_list.adapters.CoinListAdapter
 import com.air.crypto.presentation.decorations.MarginDividerItemDecoration
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
@@ -24,7 +25,7 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
 
     private val binding by viewBinding(FragmentCoinListBinding::bind)
 
-    private val viewModel: CoinViewModel by viewModels { viewModelFactory }
+    private val viewModel: CoinListViewModel by viewModels { viewModelFactory }
 
     private var onCoinClickListener: ((CoinInfo) -> Unit)? = null
 

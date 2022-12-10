@@ -1,4 +1,4 @@
-package com.air.crypto.presentation.adapters
+package com.air.crypto.presentation.coin_list.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.air.crypto.domain.model.CoinInfo

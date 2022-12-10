@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.air.crypto.R
 import com.air.crypto.databinding.ActivityMainBinding
+import com.air.crypto.presentation.coin_detail.CoinDetailFragment
+import com.air.crypto.presentation.coin_list.CoinListFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {

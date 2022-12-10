@@ -1,20 +1,16 @@
-package com.air.crypto.presentation
+package com.air.crypto.presentation.coin_list
 
 import androidx.lifecycle.ViewModel
 import com.air.crypto.domain.GetCoinInfoListUseCase
-import com.air.crypto.domain.GetCoinInfoUseCase
 import com.air.crypto.domain.LoadDataUseCase
 import javax.inject.Inject
 
-class CoinViewModel @Inject constructor(
+class CoinListViewModel @Inject constructor(
     private val getCoinInfoListUseCase: GetCoinInfoListUseCase,
-    private val getCoinInfoUseCase: GetCoinInfoUseCase,
-    private val loadDataUseCase: LoadDataUseCase,
+    private val loadDataUseCase: LoadDataUseCase
 ) : ViewModel() {
 
     val coinInfoList = getCoinInfoListUseCase()
-
-    fun getDetailInfo(fSym: String) = getCoinInfoUseCase(fSym)
 
     init {
         loadDataUseCase()

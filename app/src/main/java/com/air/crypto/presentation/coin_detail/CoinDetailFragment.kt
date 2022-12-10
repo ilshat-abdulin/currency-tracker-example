@@ -1,15 +1,18 @@
-package com.air.crypto.presentation
+package com.air.crypto.presentation.coin_detail
 
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.air.crypto.R
 import com.air.crypto.databinding.FragmentCoinDetailBinding
 import com.air.crypto.domain.model.CoinInfo
-import com.bumptech.glide.Glide
+import com.air.crypto.loadImage
+import com.air.crypto.presentation.CryptoApp
+import com.air.crypto.presentation.ViewModelFactory
 import javax.inject.Inject
 
 class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
@@ -22,7 +25,7 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
 
     private val binding by viewBinding(FragmentCoinDetailBinding::bind)
 
-    private val viewModel: CoinViewModel by activityViewModels { viewModelFactory }
+    private val viewModel: CoinDetailViewModel by viewModels { viewModelFactory }
 
     private val fromSymbol by lazy {
         requireArguments().getString(EXTRA_FROM_SYMBOL)
@@ -40,22 +43,36 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
         super.onViewCreated(view, savedInstanceState)
 
         fromSymbol?.let {
-            viewModel.getDetailInfo(it).observe(viewLifecycleOwner) {
+            observeViewState(it)
+        }
+
+        binding.imageViewBackFromDetails.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+    }
+
+    private fun observeViewState(fromSymbol: String) {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.getDetailInfo(fromSymbol).collect {
                 updateUi(it)
             }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.getCoinHistory(fromSymbol)
         }
     }
 
     private fun updateUi(coinInfo: CoinInfo) {
         with(binding) {
-            textViewCurrentPrice.text = coinInfo.price.toString()
-            textViewMinPrice.text = coinInfo.lowDay.toString()
-            textViewMaxPrice.text = coinInfo.highDay.toString()
-            textViewMarketLabel.text = coinInfo.lastMarket
-            textViewLastUpdate.text = coinInfo.lastUpdate
-            textViewFromSymbol.text = coinInfo.fromSymbol
-            textViewToSymbol.text = coinInfo.toSymbol
-            Glide.with(requireContext()).load(coinInfo.imageUrl).into(imageViewCoinLogo)
+            textViewCurrentPrice.text = "$ ${coinInfo.currentPrice}"
+            textViewMinPerDayPrice.text = "$ ${coinInfo.lowDay}"
+            textViewMaxPerDayPrice.text = "$ ${coinInfo.highDay}"
+            textViewLastDealMarket.text = coinInfo.lastMarket
+            textViewCoinFullName.text = coinInfo.fullName
+            textViewCoinName.text = coinInfo.fromSymbol
+            textViewUpdateTime.text = coinInfo.lastUpdate
+            imageViewCoinLogo.loadImage(coinInfo.imageUrl)
         }
     }
 
