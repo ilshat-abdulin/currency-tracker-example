@@ -28,7 +28,7 @@ interface ApiService {
     suspend fun getCoinHistory(
         @Query(QUERY_PARAM_FROM_SYMBOL) fSym: String,
         @Query(QUERY_PARAM_TO_SYMBOL) tSym: String = CURRENCY_USD,
-        @Query(QUERY_PARAM_LIMIT) limit: Int = 10
+        @Query(QUERY_PARAM_LIMIT) limit: Int = 48
     ): CoinHistoryResponse
 
     companion object {

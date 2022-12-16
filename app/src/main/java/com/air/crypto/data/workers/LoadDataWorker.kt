@@ -26,8 +26,8 @@ class LoadDataWorker(
                 val coinInfoDtoList = mapper.mapJsonContainerToListCoinInfo(jsonContainer)
                 val dbModelList = coinInfoDtoList.map {
                     mapper.mapDtoToDbModel(
-                        it,
-                        namesMap[it.fromSymbol] ?: ""
+                        dto = it,
+                        fullName = namesMap[it.fromSymbol] ?: ""
                     )
                 }
                 coinInfoDao.insertPriceList(dbModelList)

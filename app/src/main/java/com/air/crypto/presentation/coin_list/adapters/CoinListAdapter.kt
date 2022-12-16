@@ -33,13 +33,10 @@ class CoinListAdapter(private val onCoinClickListener: (CoinInfo) -> Unit) :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(coinInfo: CoinInfo) {
             with(binding) {
-                val context = root.context
-                val lastUpdateTemplate = context.resources.getString(R.string.last_time_template)
-
                 textViewName.text = coinInfo.fromSymbol
                 textViewFullName.text = coinInfo.fullName
-                textViewPrice.text = "$ ${coinInfo.currentPrice}"
-                textViewTimeUpdate.text = String.format(lastUpdateTemplate, coinInfo.lastUpdate)
+                textViewPrice.text = "$${coinInfo.currentPrice}"
+                textViewUpdateTime.text = coinInfo.lastUpdate
                 imageViewCoinLogo.loadImage(coinInfo.imageUrl)
                 itemView.setOnClickListener { onCoinClickListener.invoke(coinInfo) }
             }

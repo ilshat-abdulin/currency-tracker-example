@@ -39,27 +39,41 @@
 
         <TextView
             android:id="@+id/textViewPrice"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:lines="1"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/coinInfoGuideline"
             app:layout_constraintTop_toTopOf="@id/imageViewCoinLogo"
-            tools:text="5000.55" />
+            tools:text="5000.55555554444444" />
 
         <TextView
-            android:id="@+id/textViewTimeUpdate"
+            android:id="@+id/textViewUpdateTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:text="@string/last_time_template"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/imageViewCoinLogo"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewCoinLogo" />
+
+        <TextView
+            android:id="@+id/textViewUpdateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewUpdateTitle"
+            app:layout_constraintStart_toEndOf="@+id/textViewUpdateTitle"
+            app:layout_constraintTop_toTopOf="@+id/textViewUpdateTitle"
+            tools:text="06:16" />
 
         <ImageView
             android:id="@+id/imageViewCoinLogo"
@@ -70,8 +84,15 @@
             android:layout_marginBottom="4dp"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textViewTimeUpdate" />
+            app:layout_constraintBottom_toTopOf="@id/textViewUpdateTitle"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/coinInfoGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
