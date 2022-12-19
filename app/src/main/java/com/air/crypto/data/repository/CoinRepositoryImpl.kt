@@ -39,7 +39,7 @@ class CoinRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCoinHistory(fromSymbol: String): CoinHistory {
+    override suspend fun getCoinHistory(fromSymbol: String): Flow<CoinHistory> {
         val list = mutableListOf<Entry>()
         var coinHistory = CoinHistory()
         val response = apiService.getCoinHistory(fromSymbol).data?.data.orEmpty()
@@ -54,7 +54,9 @@ class CoinRepositoryImpl @Inject constructor(
             list.add(Entry(it.time.toFloat(), it.close.toFloat()))
             coinHistory = coinHistory.copy(allPricesPerTime = list.toList())
         }
-        return coinHistory
+        return flow {
+            emit(coinHistory)
+        }
     }
 
     override suspend fun loadData() = flow<RequestResult> {

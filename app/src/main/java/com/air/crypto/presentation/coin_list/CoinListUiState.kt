@@ -1,9 +1,9 @@
 package com.air.crypto.presentation.coin_list
 
-import com.air.crypto.domain.model.CoinInfo
+import com.air.crypto.presentation.coin_list.model.CoinInfoUi
 
 data class CoinListUiState(
     val loading: Boolean = true,
-    val coins: List<CoinInfo> = emptyList()
+    val coins: List<CoinInfoUi> = emptyList()
 )
 

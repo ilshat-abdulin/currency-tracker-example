@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.air.crypto.databinding.ItemCoinInfoBinding
-import com.air.crypto.domain.model.CoinInfo
 import com.air.crypto.loadImage
+import com.air.crypto.presentation.coin_list.model.CoinInfoUi
 
-class CoinListAdapter(private val onCoinClickListener: (CoinInfo) -> Unit) :
-    ListAdapter<CoinInfo, CoinListAdapter.CoinViewHolder>(CoinDiffCallback()) {
+class CoinListAdapter(private val onCoinClickListener: (CoinInfoUi) -> Unit) :
+    ListAdapter<CoinInfoUi, CoinListAdapter.CoinViewHolder>(CoinDiffCallback()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
@@ -43,26 +43,26 @@ class CoinListAdapter(private val onCoinClickListener: (CoinInfo) -> Unit) :
 
     inner class CoinViewHolder(
         private val binding: ItemCoinInfoBinding,
-        private val onCoinClickListener: (CoinInfo) -> Unit
+        private val onCoinClickListener: (CoinInfoUi) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(coinInfo: CoinInfo) {
+        fun bind(coinInfo: CoinInfoUi) {
             with(binding) {
                 textViewName.text = coinInfo.fromSymbol
                 textViewFullName.text = coinInfo.fullName
-                textViewPrice.text = "$${coinInfo.currentPrice}"
+                textViewPrice.text = coinInfo.currentPrice
                 textViewUpdateTime.text = coinInfo.lastUpdate
                 imageViewCoinLogo.loadImage(coinInfo.imageUrl)
                 itemView.setOnClickListener { onCoinClickListener.invoke(coinInfo) }
             }
         }
 
-        fun bind(coinInfo: CoinInfo, payloads: MutableList<Any>) {
+        fun bind(coinInfo: CoinInfoUi, payloads: MutableList<Any>) {
             if (payloads.last() !is CoinUpdates) return
 
             with(binding) {
                 when (payloads.last() as CoinUpdates) {
                     is CoinUpdates.PriceUpdate -> {
-                        textViewPrice.text = "$${coinInfo.currentPrice}"
+                        textViewPrice.text = coinInfo.currentPrice
                     }
                     is CoinUpdates.TimeUpdate -> {
                         textViewUpdateTime.text = coinInfo.lastUpdate

@@ -8,15 +8,16 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.air.crypto.R
 import com.air.crypto.databinding.FragmentCoinDetailBinding
-import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.model.CoinInfo
 import com.air.crypto.loadImage
 import com.air.crypto.presentation.CryptoApp
 import com.air.crypto.presentation.PriceValueChartMarker
 import com.air.crypto.presentation.ViewModelFactory
+import com.air.crypto.presentation.coin_detail.model.CoinHistoryUi
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -62,11 +63,15 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
         }
 
         binding.imageViewBackFromDetails.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            findNavController().navigateUp()
         }
     }
 
     private fun observeViewState(fromSymbol: String) {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.fetchAllData(fromSymbol)
+        }
+
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.getDetailInfo(fromSymbol).collect {
                 updateUi(it)
@@ -74,14 +79,15 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            val coinHistory = viewModel.getCoinHistory(fromSymbol)
-            updateChart(coinHistory)
+            viewModel.historyUiState.collect {
+                updateChart(it.coinHistory)
+            }
         }
     }
 
-    private fun updateChart(coinHistory: CoinHistory) {
+    private fun updateChart(coinHistory: CoinHistoryUi) {
         val dataSet = LineDataSet(
-            coinHistory.allPricesPerTime,
+            coinHistory.pricesOverTime,
             ""
         ).apply {
             mode = LineDataSet.Mode.LINEAR
@@ -97,8 +103,8 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
         val data = LineData(dataSet)
 
         binding.coinHistoryChart.apply {
-            axisLeft.axisMinimum = coinHistory.lowestPrice - (coinHistory.lowestPrice * 0.05f)
-            axisLeft.axisMaximum = coinHistory.highestPrice + (coinHistory.highestPrice * 0.05f)
+            axisLeft.axisMinimum = coinHistory.lowestValue - (coinHistory.lowestValue * 0.05f)
+            axisLeft.axisMaximum = coinHistory.highestValue + (coinHistory.highestValue * 0.05f)
             invalidate()
             setData(data)
             notifyDataSetChanged()
@@ -114,7 +120,7 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
             textViewCoinFullName.text = coinInfo.fullName
             textViewCoinName.text = coinInfo.fromSymbol
             textViewUpdateTime.text = coinInfo.lastUpdate
-            imageViewCoinLogo.loadImage(coinInfo.imageUrl)
+            imageViewCoinLogo.loadImage(coinInfo.imageUrl.orEmpty())
         }
     }
 
@@ -172,7 +178,7 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
     }
 
     companion object {
-        private const val EXTRA_FROM_SYMBOL = "fSym"
+        const val EXTRA_FROM_SYMBOL = "fSym"
 
         fun newInstance(fromSymbol: String) = CoinDetailFragment().apply {
             arguments = bundleOf(

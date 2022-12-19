@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.air.crypto.data.database.model.CoinInfoDbModel
 
-@Database(entities = [CoinInfoDbModel::class], version = 2, exportSchema = false)
+@Database(entities = [CoinInfoDbModel::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

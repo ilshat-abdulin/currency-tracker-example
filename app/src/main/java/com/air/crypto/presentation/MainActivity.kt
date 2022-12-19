@@ -2,10 +2,10 @@ package com.air.crypto.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.air.crypto.R
 import com.air.crypto.databinding.ActivityMainBinding
-import com.air.crypto.presentation.coin_list.CoinListFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -15,15 +15,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        if (savedInstanceState == null) {
-            showCoinList()
-        }
+        initBottomNavigation()
     }
 
-    private fun showCoinList() {
-        supportFragmentManager.commit {
-            replace(R.id.main_fragment_container, CoinListFragment.newInstance())
-        }
+    private fun initBottomNavigation() {
+        val navigationController = findNavController(R.id.nav_host_fragment_activity_main)
+        binding.bottomNavigationView.setupWithNavController(navigationController)
     }
 }

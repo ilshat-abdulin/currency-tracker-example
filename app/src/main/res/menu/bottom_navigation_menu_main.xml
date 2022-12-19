@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_feature_coins"
+        android:icon="@drawable/ic_baseline_bar_chart_24"
+        android:title="@string/menu_option_coins" />
+
+    <item
+        android:id="@+id/nav_feature_news"
+        android:icon="@drawable/ic_baseline_article_24"
+        android:title="@string/menu_option_news" />
+
+</menu>

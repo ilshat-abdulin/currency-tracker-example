@@ -10,7 +10,7 @@ interface CoinRepository {
 
     fun getCoinInfo(fromSymbol: String): Flow<CoinInfo>
 
-    suspend fun getCoinHistory(fromSymbol: String): CoinHistory
+    suspend fun getCoinHistory(fromSymbol: String): Flow<CoinHistory>
 
     suspend fun loadData(): Flow<RequestResult>
 }

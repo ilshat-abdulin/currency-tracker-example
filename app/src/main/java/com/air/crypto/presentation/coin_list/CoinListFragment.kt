@@ -2,11 +2,12 @@ package com.air.crypto.presentation.coin_list
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.air.crypto.R
 import com.air.crypto.databinding.FragmentCoinListBinding
@@ -101,14 +102,10 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
     }
 
     private fun showCoinDetails(fromSymbol: String) {
-        requireActivity().supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(
-                R.id.main_fragment_container,
-                CoinDetailFragment.newInstance(fromSymbol)
-            )
-            addToBackStack(null)
-        }
+        val args = bundleOf(
+            CoinDetailFragment.EXTRA_FROM_SYMBOL to fromSymbol
+        )
+        findNavController().navigate(R.id.action_fragment_coins_to_fragment_coin_detail, args)
     }
 
     private fun showSnackbar(message: String) {

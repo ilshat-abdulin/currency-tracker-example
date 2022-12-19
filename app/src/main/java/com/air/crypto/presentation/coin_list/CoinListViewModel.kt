@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.air.crypto.domain.RequestResult
 import com.air.crypto.domain.usecase.GetCoinInfoListUseCase
 import com.air.crypto.domain.usecase.LoadDataUseCase
+import com.air.crypto.presentation.coin_list.mapper.UiCoinInfoMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.*
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 class CoinListViewModel @Inject constructor(
     private val getCoinInfoListUseCase: GetCoinInfoListUseCase,
-    private val loadDataUseCase: LoadDataUseCase
+    private val loadDataUseCase: LoadDataUseCase,
+    private val coinInfoMapper: UiCoinInfoMapper
 ) : ViewModel() {
     val uiState: StateFlow<CoinListUiState> get() = _uiState.asStateFlow()
     val uiEffects: SharedFlow<CoinListUiEffects> get() = _uiEffects.asSharedFlow()
@@ -36,7 +38,8 @@ class CoinListViewModel @Inject constructor(
     private fun fetchData() {
         viewModelScope.launch {
             getCoinInfoListUseCase().collect {
-                _uiState.value = _uiState.value.copy(loading = false, coins = it)
+                val uiCoins = it.map { coinInfoMapper.mapCoinInfoToUi(it) }
+                _uiState.value = _uiState.value.copy(loading = false, coins = uiCoins)
             }
         }
     }
