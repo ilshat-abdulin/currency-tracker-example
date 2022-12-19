@@ -1,11 +1,11 @@
 package com.air.crypto.data.network.model
 
-import com.google.gson.JsonObject
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 
+@Serializable
 data class CoinInfoJsonContainerDto(
-    @SerializedName("RAW")
-    @Expose
+    @SerialName("RAW")
     val json: JsonObject? = null
 )

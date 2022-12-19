@@ -1,9 +1,6 @@
 package com.air.crypto.data.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.air.crypto.data.database.model.CoinInfoDbModel
 import kotlinx.coroutines.flow.Flow
 
@@ -16,8 +13,14 @@ interface CoinPriceInfoDao {
     fun getPriceInfoAboutCoin(fSym: String): Flow<CoinInfoDbModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPriceList(priceList: List<CoinInfoDbModel>)
+    fun insertPriceList(priceList: List<CoinInfoDbModel>)
 
     @Query("DELETE FROM full_price_list")
-    suspend fun clearPriceList()
+    fun clearPriceList()
+
+    @Transaction
+    suspend fun clearAndInsert(priceList: List<CoinInfoDbModel>) {
+        clearPriceList()
+        insertPriceList(priceList)
+    }
 }

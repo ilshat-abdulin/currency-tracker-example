@@ -5,13 +5,16 @@ import com.air.crypto.data.network.model.CoinInfoDto
 import com.air.crypto.data.network.model.CoinInfoJsonContainerDto
 import com.air.crypto.data.network.model.CoinNamesListDto
 import com.air.crypto.domain.model.CoinInfo
-import com.google.gson.Gson
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class CoinInfoMapper @Inject constructor(){
+class CoinInfoMapper @Inject constructor(
+    private val converter: Json
+) {
 
     fun mapDtoToDbModel(dto: CoinInfoDto, fullName: String) = CoinInfoDbModel(
         fromSymbol = dto.fromSymbol,
@@ -25,15 +28,10 @@ class CoinInfoMapper @Inject constructor(){
         fullName = fullName
     )
 
-    fun mapNamesListToString(namesListDto: CoinNamesListDto): String {
-        return namesListDto.names?.map {
-            it.coinName?.name
-        }?.joinToString(",") ?: ""
-    }
-
-    fun mapNamesListToMap(namesListDto: CoinNamesListDto): Map<String?, String?>? {
-        return namesListDto.names?.associate {
-            it.coinName?.name to it.coinName?.fullName
+    fun mapNamesListToMap(namesListDto: CoinNamesListDto): Map<String, String> {
+        if (namesListDto.names.isNullOrEmpty()) return emptyMap()
+        return namesListDto.names.associate {
+            it.coinName?.name.orEmpty() to it.coinName?.fullName.orEmpty()
         }
     }
 
@@ -52,14 +50,12 @@ class CoinInfoMapper @Inject constructor(){
     fun mapJsonContainerToListCoinInfo(jsonContainer: CoinInfoJsonContainerDto): List<CoinInfoDto> {
         val result = mutableListOf<CoinInfoDto>()
         val jsonObject = jsonContainer.json ?: return result
-        val coinKeySet = jsonObject.keySet()
-        for (coinKey in coinKeySet) {
-            val currencyJson = jsonObject.getAsJsonObject(coinKey)
-            val currencyKeySet = currencyJson.keySet()
-            for (currencyKey in currencyKeySet) {
-                val priceInfo = Gson().fromJson(
-                    currencyJson.getAsJsonObject(currencyKey),
-                    CoinInfoDto::class.java
+
+        for (coins in jsonObject.values) {
+            for (info in coins.jsonObject.values) {
+                val priceInfo = converter.decodeFromJsonElement(
+                    CoinInfoDto.serializer(),
+                    info.jsonObject
                 )
                 result.add(priceInfo)
             }

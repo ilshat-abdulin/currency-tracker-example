@@ -1,5 +1,6 @@
-package com.air.crypto.domain
+package com.air.crypto.domain.repository
 
+import com.air.crypto.domain.RequestResult
 import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.model.CoinInfo
 import kotlinx.coroutines.flow.Flow
@@ -11,5 +12,5 @@ interface CoinRepository {
 
     suspend fun getCoinHistory(fromSymbol: String): CoinHistory
 
-    fun loadData()
+    suspend fun loadData(): Flow<RequestResult>
 }

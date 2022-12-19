@@ -1,10 +1,10 @@
 package com.air.crypto.data.network.model
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CoinNamesListDto(
-    @SerializedName("Data")
-    @Expose
+    @SerialName("Data")
     val names: List<CoinNameContainerDto>? = null
 )

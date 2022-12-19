@@ -1,25 +1,28 @@
 package com.air.crypto.data.repository
 
-import android.app.Application
-import androidx.work.ExistingWorkPolicy
-import androidx.work.WorkManager
+import android.util.Log
 import com.air.crypto.data.database.CoinPriceInfoDao
 import com.air.crypto.data.mappers.CoinInfoMapper
 import com.air.crypto.data.network.ApiService
-import com.air.crypto.data.workers.LoadDataWorker
-import com.air.crypto.domain.CoinRepository
+import com.air.crypto.domain.RequestResult
 import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.model.CoinInfo
+import com.air.crypto.domain.repository.CoinRepository
+import com.air.crypto.repeatWithDelay
 import com.github.mikephil.charting.data.Entry
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CoinRepositoryImpl @Inject constructor(
     private val mapper: CoinInfoMapper,
     private val coinPriceInfoDao: CoinPriceInfoDao,
-    private val application: Application,
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val coinInfoDao: CoinPriceInfoDao,
 ) : CoinRepository {
 
     override fun getCoinInfoList(): Flow<List<CoinInfo>> {
@@ -54,12 +57,27 @@ class CoinRepositoryImpl @Inject constructor(
         return coinHistory
     }
 
-    override fun loadData() {
-        val workManager = WorkManager.getInstance(application)
-        workManager.enqueueUniqueWork(
-            LoadDataWorker.NAME,
-            ExistingWorkPolicy.REPLACE,
-            LoadDataWorker.makeRequest()
-        )
-    }
+    override suspend fun loadData() = flow<RequestResult> {
+
+        withContext(Dispatchers.IO) {
+            val topCoins = apiService.getTopCoinsInfo()
+            val coinsMap = mapper.mapNamesListToMap(topCoins)
+            val jsonContainer =
+                apiService.getFullPriceList(fSyms = coinsMap.keys.joinToString(","))
+            val coinInfoList = mapper.mapJsonContainerToListCoinInfo(jsonContainer)
+            val dbModelList = coinInfoList.map {
+                mapper.mapDtoToDbModel(
+                    dto = it,
+                    fullName = coinsMap[it.fromSymbol] ?: ""
+                )
+            }
+            coinInfoDao.clearAndInsert(dbModelList)
+        }
+
+        emit(RequestResult.Success)
+        Log.d("RequestResult", "isConnected")
+    }.catch { cause ->
+        Log.d("RequestResult", cause.toString())
+        emit(RequestResult.Failure(cause))
+    }.repeatWithDelay(10000)
 }

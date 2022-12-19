@@ -7,5 +7,7 @@
     <string name="day_max">Максимум за день:</string>
     <string name="last_deal_text">Последняя сделка:</string>
     <string name="coin_logo">Логотип криптовалюты</string>
+    <string name="network_error">Отсутствует соединение!</string>
+    <string name="error_message">Что-то пошло не так</string>
     <string name="slash">/</string>
 </resources>

@@ -1,8 +1,8 @@
 package com.air.crypto.presentation.coin_detail
 
 import androidx.lifecycle.ViewModel
-import com.air.crypto.domain.GetCoinHistoryUseCase
-import com.air.crypto.domain.GetCoinInfoUseCase
+import com.air.crypto.domain.usecase.GetCoinHistoryUseCase
+import com.air.crypto.domain.usecase.GetCoinInfoUseCase
 import javax.inject.Inject
 
 class CoinDetailViewModel @Inject constructor(

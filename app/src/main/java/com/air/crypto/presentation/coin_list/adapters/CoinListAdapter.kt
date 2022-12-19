@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.air.crypto.R
 import com.air.crypto.databinding.ItemCoinInfoBinding
 import com.air.crypto.domain.model.CoinInfo
 import com.air.crypto.loadImage
@@ -23,8 +22,23 @@ class CoinListAdapter(private val onCoinClickListener: (CoinInfo) -> Unit) :
         onCoinClickListener = onCoinClickListener
     )
 
-    override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: CoinViewHolder,
+        position: Int
+    ) {
         holder.bind(getItem(position))
+    }
+
+    override fun onBindViewHolder(
+        holder: CoinViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            holder.bind(getItem(position), payloads)
+        }
     }
 
     inner class CoinViewHolder(
@@ -41,9 +55,30 @@ class CoinListAdapter(private val onCoinClickListener: (CoinInfo) -> Unit) :
                 itemView.setOnClickListener { onCoinClickListener.invoke(coinInfo) }
             }
         }
+
+        fun bind(coinInfo: CoinInfo, payloads: MutableList<Any>) {
+            if (payloads.last() !is CoinUpdates) return
+
+            with(binding) {
+                when (payloads.last() as CoinUpdates) {
+                    is CoinUpdates.PriceUpdate -> {
+                        textViewPrice.text = "$${coinInfo.currentPrice}"
+                    }
+                    is CoinUpdates.TimeUpdate -> {
+                        textViewUpdateTime.text = coinInfo.lastUpdate
+                    }
+                }
+            }
+        }
+    }
+
+    sealed class CoinUpdates {
+        object PriceUpdate : CoinUpdates()
+        object TimeUpdate : CoinUpdates()
     }
 
     companion object {
         const val MAX_POOL_SIZE = 15
     }
 }
+

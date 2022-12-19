@@ -1,12 +1,8 @@
 package com.air.crypto.presentation.coin_detail
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -17,7 +13,6 @@ import com.air.crypto.R
 import com.air.crypto.databinding.FragmentCoinDetailBinding
 import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.model.CoinInfo
-import com.air.crypto.getQueryAsFlow
 import com.air.crypto.loadImage
 import com.air.crypto.presentation.CryptoApp
 import com.air.crypto.presentation.PriceValueChartMarker
@@ -30,18 +25,10 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.actor
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.thread
-import kotlin.coroutines.suspendCoroutine
 
 class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
     @Inject
@@ -110,9 +97,8 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
         val data = LineData(dataSet)
 
         binding.coinHistoryChart.apply {
-            animateX(250)
-            axisLeft.axisMinimum = coinHistory.lowestPrice
-            axisLeft.axisMaximum = coinHistory.highestPrice
+            axisLeft.axisMinimum = coinHistory.lowestPrice - (coinHistory.lowestPrice * 0.05f)
+            axisLeft.axisMaximum = coinHistory.highestPrice + (coinHistory.highestPrice * 0.05f)
             invalidate()
             setData(data)
             notifyDataSetChanged()

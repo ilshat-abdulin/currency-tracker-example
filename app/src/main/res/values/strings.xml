@@ -7,5 +7,7 @@
     <string name="day_max">Max per day:</string>
     <string name="last_deal_text">Last deal:</string>
     <string name="coin_logo">Cryptocurrency logo</string>
+    <string name="network_error">No internet connection!</string>
+    <string name="error_message">Something went wrong</string>
     <string name="slash">/</string>
 </resources>

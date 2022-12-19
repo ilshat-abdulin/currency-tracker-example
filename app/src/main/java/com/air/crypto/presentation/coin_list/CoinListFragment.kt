@@ -2,17 +2,21 @@ package com.air.crypto.presentation.coin_list
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.air.crypto.R
 import com.air.crypto.databinding.FragmentCoinListBinding
-import com.air.crypto.domain.model.CoinInfo
+import com.air.crypto.domain.NetworkUnavailable
 import com.air.crypto.presentation.CryptoApp
 import com.air.crypto.presentation.ViewModelFactory
+import com.air.crypto.presentation.coin_detail.CoinDetailFragment
 import com.air.crypto.presentation.coin_list.adapters.CoinListAdapter
 import com.air.crypto.presentation.decorations.MarginDividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
@@ -27,11 +31,9 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
 
     private val viewModel: CoinListViewModel by viewModels { viewModelFactory }
 
-    private var onCoinClickListener: ((CoinInfo) -> Unit)? = null
-
     private val coinListAdapter by lazy {
         CoinListAdapter {
-            onCoinClickListener?.invoke(it)
+            showCoinDetails(it.fromSymbol)
         }
     }
 
@@ -43,30 +45,51 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
-        observeViewState()
+        observeUiState()
+        observeUiEffectsState()
 
         binding.root.setOnRefreshListener {
             viewModel.refresh()
         }
     }
 
-    private fun observeViewState() {
+    private fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.coinInfoList.collect {
-                updateUi(it)
+            viewModel.uiState.collect { updateUi(it) }
+        }
+    }
+
+    private fun observeUiEffectsState() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.uiEffects.collect {
+                when (it) {
+                    is CoinListUiEffects.Failure -> handleError(it.cause)
+                }
             }
         }
     }
 
-    private fun updateUi(coinList: List<CoinInfo>) {
-        coinListAdapter.submitList(coinList)
+    private fun updateUi(uiState: CoinListUiState) {
+        binding.root.isRefreshing = uiState.loading
+        binding.loadingProgressBar.isVisible = uiState.loading
+
+        coinListAdapter.submitList(uiState.coins)
+    }
+
+    private fun handleError(cause: Throwable) {
+        binding.loadingProgressBar.isVisible = false
         binding.root.isRefreshing = false
+
+        val message = when (cause) {
+            is NetworkUnavailable -> getString(R.string.network_error)
+            else -> getString(R.string.error_message)
+        }
+        showSnackbar(message)
     }
 
     private fun setRecyclerView() {
         with(binding.coinListRecyclerView) {
             adapter = coinListAdapter
-            itemAnimator = null
             recycledViewPool.setMaxRecycledViews(0, CoinListAdapter.MAX_POOL_SIZE)
 
             addItemDecoration(
@@ -78,10 +101,23 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
         }
     }
 
-    companion object {
-        fun newInstance(onCoinClickListener: (CoinInfo) -> Unit) = CoinListFragment().apply {
-            this.onCoinClickListener = onCoinClickListener
+    private fun showCoinDetails(fromSymbol: String) {
+        requireActivity().supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(
+                R.id.main_fragment_container,
+                CoinDetailFragment.newInstance(fromSymbol)
+            )
+            addToBackStack(null)
         }
+    }
+    private fun showSnackbar(message: String) {
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+    }
+
+
+    companion object {
+        fun newInstance() = CoinListFragment()
     }
 }
 
