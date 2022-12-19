@@ -9,5 +9,6 @@
     <string name="coin_logo">Cryptocurrency logo</string>
     <string name="network_error">No internet connection!</string>
     <string name="error_message">Something went wrong</string>
+    <string name="coins_empty">No coins found. Try again later.</string>
     <string name="slash">/</string>
 </resources>

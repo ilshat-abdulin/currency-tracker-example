@@ -49,6 +49,7 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
         observeUiEffectsState()
 
         binding.root.setOnRefreshListener {
+            binding.root.isRefreshing = false
             viewModel.refresh()
         }
     }
@@ -70,15 +71,13 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
     }
 
     private fun updateUi(uiState: CoinListUiState) {
-        binding.root.isRefreshing = uiState.loading
         binding.loadingProgressBar.isVisible = uiState.loading
-
+        binding.coinsEmptyTextView.isVisible = !uiState.loading && uiState.coins.isEmpty()
         coinListAdapter.submitList(uiState.coins)
     }
 
     private fun handleError(cause: Throwable) {
         binding.loadingProgressBar.isVisible = false
-        binding.root.isRefreshing = false
 
         val message = when (cause) {
             is NetworkUnavailable -> getString(R.string.network_error)
@@ -111,6 +110,7 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
             addToBackStack(null)
         }
     }
+
     private fun showSnackbar(message: String) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
