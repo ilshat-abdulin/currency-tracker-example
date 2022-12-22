@@ -2,6 +2,7 @@ package com.air.crypto.data.repository
 
 import android.util.Log
 import com.air.crypto.data.database.CoinPriceInfoDao
+import com.air.crypto.data.mappers.CoinHistoryMapper
 import com.air.crypto.data.mappers.CoinInfoMapper
 import com.air.crypto.data.network.ApiService
 import com.air.crypto.domain.RequestResult
@@ -9,7 +10,6 @@ import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.model.CoinInfo
 import com.air.crypto.domain.repository.CoinRepository
 import com.air.crypto.repeatWithDelay
-import com.github.mikephil.charting.data.Entry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -20,9 +20,9 @@ import javax.inject.Inject
 
 class CoinRepositoryImpl @Inject constructor(
     private val mapper: CoinInfoMapper,
+    private val historyMapper: CoinHistoryMapper,
     private val coinPriceInfoDao: CoinPriceInfoDao,
-    private val apiService: ApiService,
-    private val coinInfoDao: CoinPriceInfoDao,
+    private val apiService: ApiService
 ) : CoinRepository {
 
     override fun getCoinInfoList(): Flow<List<CoinInfo>> {
@@ -40,26 +40,14 @@ class CoinRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCoinHistory(fromSymbol: String): Flow<CoinHistory> {
-        val list = mutableListOf<Entry>()
-        var coinHistory = CoinHistory()
         val response = apiService.getCoinHistory(fromSymbol).data?.data.orEmpty()
-
-        coinHistory = coinHistory.copy(lowestPrice = response.minOf {
-            it.close
-        }.toFloat(), highestPrice = response.maxOf {
-            it.close
-        }.toFloat())
-
-        response.forEach {
-            list.add(Entry(it.time.toFloat(), it.close.toFloat()))
-            coinHistory = coinHistory.copy(allPricesPerTime = list.toList())
-        }
+        val coinHistory = historyMapper.mapCoinHistoryDataDtoToEntity(response)
         return flow {
             emit(coinHistory)
         }
     }
 
-    override suspend fun loadData() = flow<RequestResult> {
+    override suspend fun loadCoinInfoData() = flow<RequestResult> {
 
         withContext(Dispatchers.IO) {
             val topCoins = apiService.getTopCoinsInfo()
@@ -73,7 +61,7 @@ class CoinRepositoryImpl @Inject constructor(
                     fullName = coinsMap[it.fromSymbol] ?: ""
                 )
             }
-            coinInfoDao.clearAndInsert(dbModelList)
+            coinPriceInfoDao.clearAndInsert(dbModelList)
         }
 
         emit(RequestResult.Success)

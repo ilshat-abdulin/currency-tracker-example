@@ -12,5 +12,5 @@ interface CoinRepository {
 
     suspend fun getCoinHistory(fromSymbol: String): Flow<CoinHistory>
 
-    suspend fun loadData(): Flow<RequestResult>
+    suspend fun loadCoinInfoData(): Flow<RequestResult>
 }

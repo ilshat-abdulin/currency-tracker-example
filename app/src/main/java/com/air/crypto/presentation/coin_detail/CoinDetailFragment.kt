@@ -69,7 +69,7 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
 
     private fun observeViewState(fromSymbol: String) {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.fetchAllData(fromSymbol)
+            viewModel.getCoinHistory(fromSymbol)
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {

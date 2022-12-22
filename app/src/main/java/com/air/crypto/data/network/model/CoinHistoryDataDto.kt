@@ -1,5 +1,6 @@
 package com.air.crypto.data.network.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -8,8 +9,9 @@ data class CoinHistoryDataDto (
     val high: Double,
     val low: Double,
     val open: Double,
-    val volumefrom: Double,
-    val volumeto: Double,
-    val close: Double,
-    val conversionSymbol: String
+    @SerialName("volumefrom")
+    val volumeFrom: Double,
+    @SerialName("volumeto")
+    val volumeTo: Double,
+    val close: Double
 )
