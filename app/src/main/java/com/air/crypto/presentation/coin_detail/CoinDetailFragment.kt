@@ -1,10 +1,10 @@
 package com.air.crypto.presentation.coin_detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,20 +12,18 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.air.crypto.R
 import com.air.crypto.databinding.FragmentCoinDetailBinding
-import com.air.crypto.domain.model.CoinInfo
-import com.air.crypto.loadImage
 import com.air.crypto.presentation.CryptoApp
 import com.air.crypto.presentation.PriceValueChartMarker
 import com.air.crypto.presentation.ViewModelFactory
 import com.air.crypto.presentation.coin_detail.model.CoinHistoryUi
+import com.air.crypto.util.Failure
+import com.air.crypto.util.loadImage
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.google.android.material.snackbar.Snackbar
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -58,31 +56,66 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setLineChartView()
+        setUiEventListeners()
+        observeUiEffects()
+
         fromSymbol?.let {
             observeViewState(it)
         }
+    }
 
+    private fun setUiEventListeners() {
         binding.imageViewBackFromDetails.setOnClickListener {
             findNavController().navigateUp()
         }
     }
 
     private fun observeViewState(fromSymbol: String) {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.getCoinHistory(fromSymbol)
-        }
+        viewModel.getCoinHistory(fromSymbol)
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.getDetailInfo(fromSymbol).collect {
+            viewModel.uiState.collect {
                 updateUi(it)
             }
         }
+    }
 
+    private fun observeUiEffects() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.historyUiState.collect {
-                updateChart(it.coinHistory)
+            viewModel.uiEffects.collect {
+                when (it) {
+                    is CoinDetailUiEffects.FailureEffect -> handleError(it.failure)
+                }
             }
         }
+    }
+
+    private fun updateUi(uiState: CoinDetailUiState) {
+        val (loading, coinHistory, coinDetail) = uiState
+
+        with(binding) {
+            if (loading) {
+                chartLoading.isVisible = true
+                chartLoading.setText(getString(R.string.chart_loading))
+            } else if (coinHistory.pricesOverTime.isEmpty()) {
+                chartLoading.isVisible = false
+                chartEmptyTextView.isVisible = true
+            } else {
+                chartLoading.isVisible = false
+                chartEmptyTextView.isVisible = false
+            }
+
+            textViewCurrentPrice.text = coinDetail.currentPrice
+            textViewMinPerDayPrice.text = coinDetail.lowDay
+            textViewMaxPerDayPrice.text = coinDetail.highDay
+            textViewLastDealMarket.text = coinDetail.lastMarket
+            textViewCoinFullName.text = coinDetail.fullName
+            textViewCoinName.text = coinDetail.fromSymbol
+            textViewUpdateTime.text = coinDetail.lastUpdate
+            imageViewCoinLogo.loadImage(coinDetail.imageUrl)
+        }
+
+        updateChart(coinHistory)
     }
 
     private fun updateChart(coinHistory: CoinHistoryUi) {
@@ -108,19 +141,6 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
             invalidate()
             setData(data)
             notifyDataSetChanged()
-        }
-    }
-
-    private fun updateUi(coinInfo: CoinInfo) {
-        with(binding) {
-            textViewCurrentPrice.text = "$${coinInfo.currentPrice}"
-            textViewMinPerDayPrice.text = "$${coinInfo.lowDay}"
-            textViewMaxPerDayPrice.text = "$${coinInfo.highDay}"
-            textViewLastDealMarket.text = coinInfo.lastMarket
-            textViewCoinFullName.text = coinInfo.fullName
-            textViewCoinName.text = coinInfo.fromSymbol
-            textViewUpdateTime.text = coinInfo.lastUpdate
-            imageViewCoinLogo.loadImage(coinInfo.imageUrl.orEmpty())
         }
     }
 
@@ -164,17 +184,20 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
             setTouchEnabled(true)
             setPinchZoom(true)
             setDrawGridBackground(false)
-            setOnChartValueSelectedListener(setOnChartSelectedListener())
             invalidate()
         }
     }
 
-    private fun setOnChartSelectedListener() = object : OnChartValueSelectedListener {
-        override fun onValueSelected(e: Entry?, h: Highlight?) {
-            Log.d("OnChartValue", "time: ${e?.x?.toLong().toString()}, price: ${e?.y.toString()}")
+    private fun handleError(failure: Failure) {
+        val message = when (failure) {
+            is Failure.NetworkUnavailable -> getString(R.string.network_error)
+            else -> getString(R.string.error_message)
         }
+        showSnackbar(message)
+    }
 
-        override fun onNothingSelected() {}
+    private fun showSnackbar(message: String) {
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 
     companion object {

@@ -2,8 +2,8 @@ package com.air.crypto.di
 
 import android.app.Application
 import androidx.room.Room
-import com.air.crypto.data.database.AppDatabase
-import com.air.crypto.data.database.CoinPriceInfoDao
+import com.air.crypto.data_source.local.database.AppDatabase
+import com.air.crypto.data_source.local.database.CoinDao
 import dagger.Module
 import dagger.Provides
 
@@ -24,7 +24,7 @@ object RoomModule {
 
     @Provides
     @ApplicationScope
-    fun provideCoinInfoDao(
+    fun provideCoinDao(
         database: AppDatabase
-    ): CoinPriceInfoDao = database.coinPriceInfoDao()
+    ): CoinDao = database.coinDao()
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:alpha="0.6"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/cardProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/coinHistoryChart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coinHistoryChart" />
+
+        <TextView
+            android:id="@+id/cardTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/white"
+            android:visibility="visible"
+            tools:text="Loading..." />
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

@@ -11,12 +11,12 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.air.crypto.R
 import com.air.crypto.databinding.FragmentCoinListBinding
-import com.air.crypto.domain.NetworkUnavailable
 import com.air.crypto.presentation.CryptoApp
 import com.air.crypto.presentation.ViewModelFactory
 import com.air.crypto.presentation.coin_detail.CoinDetailFragment
 import com.air.crypto.presentation.coin_list.adapters.CoinListAdapter
 import com.air.crypto.presentation.decorations.MarginDividerItemDecoration
+import com.air.crypto.util.Failure
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -47,8 +47,11 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         observeUiState()
-        observeUiEffectsState()
+        observeUiEffects()
+        setUiEventListeners()
+    }
 
+    private fun setUiEventListeners() {
         binding.root.setOnRefreshListener {
             binding.root.isRefreshing = false
             viewModel.refresh()
@@ -61,27 +64,38 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
         }
     }
 
-    private fun observeUiEffectsState() {
+    private fun observeUiEffects() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.uiEffects.collect {
                 when (it) {
-                    is CoinListUiEffects.Failure -> handleError(it.cause)
+                    is CoinListUiEffects.FailureEffect -> handleError(it.failure)
                 }
             }
         }
     }
 
     private fun updateUi(uiState: CoinListUiState) {
-        binding.loadingProgressBar.isVisible = uiState.loading
-        binding.coinsEmptyTextView.isVisible = !uiState.loading && uiState.coins.isEmpty()
+        val (loading, coins) = uiState
+
+        with(binding) {
+            if (loading) {
+                coinsLoading.isVisible = true
+                coinsLoading.setText(getString(R.string.coins_loading))
+            } else if (coins.isEmpty()) {
+                coinsLoading.isVisible = false
+                coinsEmptyTextView.isVisible = true
+            } else {
+                coinsLoading.isVisible = false
+                coinsEmptyTextView.isVisible = false
+            }
+        }
+
         coinListAdapter.submitList(uiState.coins)
     }
 
-    private fun handleError(cause: Throwable) {
-        binding.loadingProgressBar.isVisible = false
-
-        val message = when (cause) {
-            is NetworkUnavailable -> getString(R.string.network_error)
+    private fun handleError(failure: Failure) {
+        val message = when (failure) {
+            is Failure.NetworkUnavailable -> getString(R.string.network_error)
             else -> getString(R.string.error_message)
         }
         showSnackbar(message)
@@ -111,7 +125,6 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
     private fun showSnackbar(message: String) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
-
 
     companion object {
         fun newInstance() = CoinListFragment()

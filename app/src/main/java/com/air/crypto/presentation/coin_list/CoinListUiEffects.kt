@@ -1,5 +1,7 @@
 package com.air.crypto.presentation.coin_list
 
+import com.air.crypto.util.Failure
+
 sealed class CoinListUiEffects {
-  data class Failure(val cause: Throwable) : CoinListUiEffects()
+    data class FailureEffect(val failure: Failure) : CoinListUiEffects()
 }

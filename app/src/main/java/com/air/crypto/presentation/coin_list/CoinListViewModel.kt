@@ -3,10 +3,10 @@ package com.air.crypto.presentation.coin_list
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.air.crypto.domain.RequestResult
-import com.air.crypto.domain.usecase.GetCoinInfoListUseCase
+import com.air.crypto.domain.usecase.GetCoinListUseCase
 import com.air.crypto.domain.usecase.LoadDataUseCase
-import com.air.crypto.presentation.coin_list.mapper.UiCoinInfoMapper
+import com.air.crypto.presentation.coin_list.mapper.CoinListUiMapper
+import com.air.crypto.util.Failure
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.*
@@ -14,15 +14,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CoinListViewModel @Inject constructor(
-    private val getCoinInfoListUseCase: GetCoinInfoListUseCase,
+    private val getCoinListUseCase: GetCoinListUseCase,
     private val loadDataUseCase: LoadDataUseCase,
-    private val coinInfoMapper: UiCoinInfoMapper
+    private val mapper: CoinListUiMapper
 ) : ViewModel() {
     val uiState: StateFlow<CoinListUiState> get() = _uiState.asStateFlow()
-    val uiEffects: SharedFlow<CoinListUiEffects> get() = _uiEffects.asSharedFlow()
-
     private val _uiState = MutableStateFlow(CoinListUiState())
+
     private val _uiEffects = MutableSharedFlow<CoinListUiEffects>()
+    val uiEffects: SharedFlow<CoinListUiEffects> get() = _uiEffects.asSharedFlow()
 
     private var testJob: Job? = null
 
@@ -37,9 +37,11 @@ class CoinListViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            getCoinInfoListUseCase().collect {
-                val uiCoins = it.map { coinInfoMapper.mapCoinInfoToUi(it) }
-                _uiState.value = _uiState.value.copy(loading = false, coins = uiCoins)
+            getCoinListUseCase().collect {
+                val uiCoins = it.map { mapper.mapCoinItemToUi(it) }
+                _uiState.update { state ->
+                    state.copy(loading = false, coins = uiCoins)
+                }
             }
         }
     }
@@ -47,38 +49,41 @@ class CoinListViewModel @Inject constructor(
     private fun loadData() {
         cancelJob()
         handleLoading()
+
         testJob = viewModelScope.launch {
             ensureActive()
             loadDataUseCase().collect {
-                when (it) {
-                    is RequestResult.Loading -> {
-                        handleLoading()
-                    }
-                    is RequestResult.Failure -> {
-                        handleFailure(it.cause)
-                    }
-                    is RequestResult.Success -> {
-                        handleSuccess()
-                    }
-                }
+                it.either(::handleFailure, ::handleSuccess)
             }
         }
+
         testJob?.invokeOnCompletion {
-            Log.e("periodicTaskCancel", it.toString())
+            Log.e("CoinListViewModel", it.toString())
         }
     }
 
-    private fun handleSuccess() {
-        _uiState.value = _uiState.value.copy(loading = false)
+    private fun handleSuccess(unit: Unit) {
+        _uiState.update { state ->
+            state.copy(loading = false)
+        }
     }
 
     private fun handleLoading() {
-        _uiState.value = _uiState.value.copy(loading = true)
+        _uiState.update { state ->
+            state.copy(loading = true)
+        }
     }
 
-    private suspend fun handleFailure(cause: Throwable) {
-        _uiState.value = _uiState.value.copy(loading = false)
-        _uiEffects.emit(CoinListUiEffects.Failure(cause))
+    private fun handleFailure(failure: Failure) {
+        viewModelScope.launch {
+            _uiEffects.emit(CoinListUiEffects.FailureEffect(failure))
+        }
+
+        _uiState.update { state ->
+            state.copy(
+                loading = false
+            )
+        }
     }
 
     private fun cancelJob() {

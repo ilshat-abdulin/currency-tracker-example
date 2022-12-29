@@ -10,6 +10,9 @@
     <string name="network_error">No internet connection!</string>
     <string name="error_message">Something went wrong</string>
     <string name="coins_empty">No coins found. Try again later.</string>
+    <string name="coins_loading">Coins are being loaded…</string>
+    <string name="chart_empty">No chart data found. Try again later.</string>
+    <string name="chart_loading">Chart are being loaded…</string>
     <string name="menu_option_coins">Watchlist</string>
     <string name="menu_option_news">News</string>
     <string name="slash">/</string>

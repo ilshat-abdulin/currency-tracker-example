@@ -1,16 +1,17 @@
 package com.air.crypto.domain.repository
 
-import com.air.crypto.domain.RequestResult
 import com.air.crypto.domain.model.CoinHistory
-import com.air.crypto.domain.model.CoinInfo
+import com.air.crypto.domain.model.CoinItem
+import com.air.crypto.util.Either
+import com.air.crypto.util.Failure
 import kotlinx.coroutines.flow.Flow
 
 interface CoinRepository {
-    fun getCoinInfoList(): Flow<List<CoinInfo>>
+    fun getCoinList(): Flow<List<CoinItem>>
 
-    fun getCoinInfo(fromSymbol: String): Flow<CoinInfo>
+    fun getCoinDetail(fromSymbol: String): Flow<CoinItem>
 
-    suspend fun getCoinHistory(fromSymbol: String): Flow<CoinHistory>
+    suspend fun getCoinHistory(fromSymbol: String): Flow<Either<Failure, CoinHistory>>
 
-    suspend fun loadCoinInfoData(): Flow<RequestResult>
+    suspend fun loadCoins(): Flow<Either<Failure, Unit>>
 }

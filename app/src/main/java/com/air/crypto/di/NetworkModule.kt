@@ -1,9 +1,9 @@
 package com.air.crypto.di
 
 import com.air.crypto.BuildConfig
-import com.air.crypto.data.network.ApiService
-import com.air.crypto.data.network.NetworkStatusManager
-import com.air.crypto.domain.NetworkUnavailable
+import com.air.crypto.data_source.remote.network.ApiService
+import com.air.crypto.data_source.remote.network.NetworkStatusManager
+import com.air.crypto.util.NetworkUnavailable
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
