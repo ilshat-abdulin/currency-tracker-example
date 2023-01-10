@@ -2,15 +2,15 @@ package com.air.crypto.data_source.remote
 
 import com.air.crypto.data.RemoteDataSource
 import com.air.crypto.data_source.mapper.CoinMapper
-import com.air.crypto.data_source.remote.model.CoinInfoModel
-import com.air.crypto.data_source.remote.network.ApiService
+import com.air.core.network.model.CoinInfoModel
+import com.air.core.network.services.CoinsService
 import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.util.*
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val apiService: CoinsService,
     private val mapper: CoinMapper
 ) : RemoteDataSource {
     override suspend fun getTopCoinList(): Either<Failure, CoinInfoModel> {

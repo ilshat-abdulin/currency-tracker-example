@@ -1,6 +1,7 @@
 package com.air.crypto.util
 
 import android.util.Log
+import com.air.core.network.NetworkUnavailable
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 

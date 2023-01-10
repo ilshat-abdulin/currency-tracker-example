@@ -1,7 +1,7 @@
 package com.air.crypto.data.repository
 
 import com.air.crypto.data.RemoteDataSource
-import com.air.crypto.data_source.local.database.CoinDao
+import com.air.core.database.CoinDao
 import com.air.crypto.data_source.mapper.CoinMapper
 import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.model.CoinItem

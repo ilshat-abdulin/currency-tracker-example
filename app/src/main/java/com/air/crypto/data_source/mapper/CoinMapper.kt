@@ -1,10 +1,10 @@
 package com.air.crypto.data_source.mapper
 
-import com.air.crypto.data_source.local.model.CoinDbModel
-import com.air.crypto.data_source.remote.model.CoinHistoryDataDto
-import com.air.crypto.data_source.remote.model.CoinDto
-import com.air.crypto.data_source.remote.model.CoinJsonContainerDto
-import com.air.crypto.data_source.remote.model.CoinNamesListDto
+import com.air.core.database.model.CoinDbModel
+import com.air.core.network.model.CoinHistoryDataDto
+import com.air.core.network.model.CoinDto
+import com.air.core.network.model.CoinJsonContainerDto
+import com.air.core.network.model.CoinNamesListDto
 import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.model.CoinItem
 import kotlinx.serialization.json.Json
@@ -14,9 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class CoinMapper @Inject constructor(
-    private val converter: Json
-) {
+class CoinMapper @Inject constructor() {
     fun mapDtoToDbModel(dto: CoinDto, fullName: String) = CoinDbModel(
         fromSymbol = dto.fromSymbol,
         toSymbol = dto.toSymbol,
@@ -62,13 +60,17 @@ class CoinMapper @Inject constructor(
     )
 
     fun mapCoinNamesToMap(namesListDto: CoinNamesListDto): Map<String, String> {
-        if (namesListDto.names.isNullOrEmpty()) return emptyMap()
-        return namesListDto.names.associate {
+        return namesListDto.names?.associate {
             it.coinName?.name.orEmpty() to it.coinName?.fullName.orEmpty()
-        }
+        } ?: emptyMap()
     }
 
     fun mapJsonContainerToCoinList(jsonContainer: CoinJsonContainerDto): List<CoinDto> {
+        val converter = Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
+
         val result = mutableListOf<CoinDto>()
         val jsonObject = jsonContainer.json ?: return result
 
