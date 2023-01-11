@@ -1,6 +1,6 @@
 package com.air.coins.data
 
-import com.air.core.network.model.CoinInfoModel
+import com.air.core.network.model.coins.CoinInfoModel
 import com.air.coins.domain.model.CoinHistory
 import com.air.core_functional.Either
 import com.air.core_functional.Failure

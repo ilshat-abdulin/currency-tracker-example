@@ -1,6 +1,6 @@
 package com.air.coins.data_source.remote
 
-import com.air.core.network.model.CoinInfoModel
+import com.air.core.network.model.coins.CoinInfoModel
 import com.air.core.network.services.CoinsService
 import com.air.core.network.executeRetrofitCall
 import com.air.core_functional.map

@@ -1,10 +1,10 @@
 package com.air.coins.data_source.mapper
 
 import com.air.core.database.model.CoinDbModel
-import com.air.core.network.model.CoinHistoryDataDto
-import com.air.core.network.model.CoinDto
-import com.air.core.network.model.CoinJsonContainerDto
-import com.air.core.network.model.CoinNamesListDto
+import com.air.core.network.model.coins.CoinHistoryDataDto
+import com.air.core.network.model.coins.CoinDto
+import com.air.core.network.model.coins.CoinJsonContainerDto
+import com.air.core.network.model.coins.CoinNamesListDto
 import com.air.coins.domain.model.CoinHistory
 import com.air.coins.domain.model.CoinItem
 import kotlinx.serialization.json.Json

@@ -1,4 +1,4 @@
-package com.air.core.network.model
+package com.air.core.network.model.coins
 
 data class CoinInfoModel(
     val coins: List<CoinDto> = emptyList(),

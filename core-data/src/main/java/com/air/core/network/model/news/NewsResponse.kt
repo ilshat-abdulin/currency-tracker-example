@@ -1,10 +1,10 @@
-package com.air.core.network.model
+package com.air.core.network.model.news
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CoinNamesListDto(
+data class NewsResponse(
     @SerialName("Data")
-    val names: List<CoinNameContainerDto>? = null
+    val articles: List<ArticleDto>
 )

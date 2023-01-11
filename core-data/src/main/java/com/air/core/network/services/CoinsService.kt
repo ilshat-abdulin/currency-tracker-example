@@ -1,8 +1,8 @@
 package com.air.core.network.services
 
-import com.air.core.network.model.CoinHistoryResponse
-import com.air.core.network.model.CoinJsonContainerDto
-import com.air.core.network.model.CoinNamesListDto
+import com.air.core.network.model.coins.CoinHistoryResponse
+import com.air.core.network.model.coins.CoinJsonContainerDto
+import com.air.core.network.model.coins.CoinNamesListDto
 import retrofit2.Retrofit
 import retrofit2.create
 import retrofit2.http.GET

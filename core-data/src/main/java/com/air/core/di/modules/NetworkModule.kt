@@ -5,6 +5,7 @@ import com.air.core.di.qualifiers.BaseUrl
 import com.air.core.network.NetworkStatusManager
 import com.air.core.network.NetworkUnavailable
 import com.air.core.network.services.CoinsService
+import com.air.core.network.services.NewsService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -34,6 +35,10 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideCoinsService(retrofit: Retrofit): CoinsService = CoinsService(retrofit)
+
+    @Provides
+    @Singleton
+    fun provideNewsService(retrofit: Retrofit): NewsService = NewsService(retrofit)
 
     @OptIn(ExperimentalSerializationApi::class)
     @Provides
