@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.air.crypto.domain.usecase.GetCoinListUseCase
 import com.air.crypto.domain.usecase.LoadDataUseCase
 import com.air.crypto.presentation.coin_list.mapper.CoinListUiMapper
-import com.air.crypto.util.Failure
+import com.air.core_functional.Failure
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.*

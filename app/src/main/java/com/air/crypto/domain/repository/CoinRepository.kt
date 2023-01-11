@@ -2,8 +2,8 @@ package com.air.crypto.domain.repository
 
 import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.model.CoinItem
-import com.air.crypto.util.Either
-import com.air.crypto.util.Failure
+import com.air.core_functional.Either
+import com.air.core_functional.Failure
 import kotlinx.coroutines.flow.Flow
 
 interface CoinRepository {

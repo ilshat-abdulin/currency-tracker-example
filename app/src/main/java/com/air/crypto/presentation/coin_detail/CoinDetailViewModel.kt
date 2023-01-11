@@ -6,7 +6,7 @@ import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.usecase.GetCoinDetailUseCase
 import com.air.crypto.domain.usecase.GetCoinHistoryUseCase
 import com.air.crypto.presentation.coin_detail.mapper.CoinDetailUiMapper
-import com.air.crypto.util.Failure
+import com.air.core_functional.Failure
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

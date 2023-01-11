@@ -1,4 +1,4 @@
-package com.air.crypto.util
+package com.air.core_functional
 
 sealed class Failure {
     data class NetworkUnavailable(val message: String?) : Failure()

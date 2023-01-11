@@ -1,9 +1,9 @@
-package com.air.crypto.presentation
+package com.air.core_ui.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
-import com.air.crypto.R
+import com.air.core_ui.R
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry

@@ -1,11 +1,11 @@
-package com.air.crypto.presentation
+package com.air.core_ui.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.air.crypto.R
+import com.air.core_ui.R
 import com.google.android.material.card.MaterialCardView
 
 class LoadingCardView @JvmOverloads constructor(

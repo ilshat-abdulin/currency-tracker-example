@@ -1,8 +1,8 @@
-package com.air.crypto.util
+package com.air.core_ui.extensions
 
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
-import com.air.crypto.R
+import com.air.core_ui.R
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

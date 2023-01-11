@@ -1,4 +1,4 @@
-package com.air.crypto.util
+package com.air.core_functional
 
 sealed class Either<out L, out R> {
     data class Error<out L>(val error: L) : Either<L, Nothing>()

@@ -1,7 +1,11 @@
-package com.air.crypto.util
+package com.air.core.utils
 
 import android.util.Log
 import com.air.core.network.NetworkUnavailable
+import com.air.core_functional.Either
+import com.air.core_functional.Failure
+import com.air.core_functional.toError
+import com.air.core_functional.toSuccess
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 

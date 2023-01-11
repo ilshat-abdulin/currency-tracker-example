@@ -6,10 +6,10 @@ import com.air.crypto.data_source.mapper.CoinMapper
 import com.air.crypto.domain.model.CoinHistory
 import com.air.crypto.domain.model.CoinItem
 import com.air.crypto.domain.repository.CoinRepository
-import com.air.crypto.util.Either
-import com.air.crypto.util.Failure
+import com.air.core_functional.Either
+import com.air.core_functional.Failure
 import com.air.crypto.util.repeatWithDelay
-import com.air.crypto.util.suspendMap
+import com.air.core_functional.suspendMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map

@@ -1,3 +1,5 @@
 include ':app'
 rootProject.name = "Cryptocurrency Tracker"
-include ':core'
+include ':core-data'
+include ':core-functional'
+include ':core-ui'

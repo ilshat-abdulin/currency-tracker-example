@@ -13,11 +13,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.air.crypto.R
 import com.air.crypto.databinding.FragmentCoinDetailBinding
 import com.air.crypto.presentation.CryptoApp
-import com.air.crypto.presentation.PriceValueChartMarker
+import com.air.core_ui.views.PriceValueChartMarker
 import com.air.crypto.presentation.ViewModelFactory
 import com.air.crypto.presentation.coin_detail.model.CoinHistoryUi
-import com.air.crypto.util.Failure
-import com.air.crypto.util.loadImage
+import com.air.core_ui.extensions.loadImage
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.LineData
@@ -188,9 +187,9 @@ class CoinDetailFragment : Fragment(R.layout.fragment_coin_detail) {
         }
     }
 
-    private fun handleError(failure: Failure) {
+    private fun handleError(failure: com.air.core_functional.Failure) {
         val message = when (failure) {
-            is Failure.NetworkUnavailable -> getString(R.string.network_error)
+            is com.air.core_functional.Failure.NetworkUnavailable -> getString(R.string.network_error)
             else -> getString(R.string.error_message)
         }
         showSnackbar(message)

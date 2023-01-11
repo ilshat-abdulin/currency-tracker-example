@@ -16,7 +16,7 @@ import com.air.crypto.presentation.ViewModelFactory
 import com.air.crypto.presentation.coin_detail.CoinDetailFragment
 import com.air.crypto.presentation.coin_list.adapters.CoinListAdapter
 import com.air.crypto.presentation.decorations.MarginDividerItemDecoration
-import com.air.crypto.util.Failure
+import com.air.core_functional.Failure
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -95,7 +95,7 @@ class CoinListFragment : Fragment(R.layout.fragment_coin_list) {
 
     private fun handleError(failure: Failure) {
         val message = when (failure) {
-            is Failure.NetworkUnavailable -> getString(R.string.network_error)
+            is com.air.core_functional.Failure.NetworkUnavailable -> getString(R.string.network_error)
             else -> getString(R.string.error_message)
         }
         showSnackbar(message)

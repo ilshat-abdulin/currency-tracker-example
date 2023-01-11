@@ -17,11 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingTop="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/coinHistoryChart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/coinHistoryChart" />
+            android:paddingTop="16dp" />
 
         <TextView
             android:id="@+id/cardTextView"

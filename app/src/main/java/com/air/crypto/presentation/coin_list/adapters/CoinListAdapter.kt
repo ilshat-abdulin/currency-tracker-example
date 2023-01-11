@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.air.crypto.databinding.ItemCoinInfoBinding
-import com.air.crypto.util.loadImage
+import com.air.core_ui.extensions.loadImage
 import com.air.crypto.presentation.coin_list.model.CoinItemUi
 
 class CoinListAdapter(private val onCoinClickListener: (CoinItemUi) -> Unit) :
