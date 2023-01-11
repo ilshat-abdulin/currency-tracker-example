@@ -3,3 +3,4 @@ rootProject.name = "Cryptocurrency Tracker"
 include ':core-data'
 include ':core-functional'
 include ':core-ui'
+include ':feature:coins'

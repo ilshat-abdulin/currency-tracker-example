@@ -3,7 +3,6 @@ package com.air.crypto.data.workers
 import android.content.Context
 import androidx.work.*
 import com.air.core.database.CoinDao
-import com.air.crypto.data_source.mapper.CoinMapper
 import com.air.core.network.services.CoinsService
 import javax.inject.Inject
 
@@ -12,7 +11,7 @@ class LoadDataWorker(
     workerParameters: WorkerParameters,
     private val coinDao: CoinDao,
     private val apiService: CoinsService,
-    private val mapper: CoinMapper
+    //private val mapper: CoinMapper
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -35,7 +34,7 @@ class LoadDataWorker(
     class Factory @Inject constructor(
         private val coinDao: CoinDao,
         private val apiService: CoinsService,
-        private val mapper: CoinMapper
+        //private val mapper: CoinMapper
     ) : ChildWorkerFactory {
 
         override fun create(
@@ -47,7 +46,7 @@ class LoadDataWorker(
                 workerParameters,
                 coinDao,
                 apiService,
-                mapper
+            //    mapper
             )
         }
     }

@@ -1,24 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/fragment_coins"
-    android:id="@+id/app_navigation.xml">
+    android:id="@+id/app_navigation.xml"
+    app:startDestination="@id/coins_nav">
 
-    <fragment
-        android:id="@+id/fragment_coins"
-        android:name="com.air.crypto.presentation.coin_list.CoinListFragment"
-        android:label="EventsFragment"
-        tools:layout="@layout/fragment_coin_list">
-        <action
-            android:id="@+id/action_fragment_coins_to_fragment_coin_detail"
-            app:destination="@id/fragment_coin_detail" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/fragment_coin_detail"
-        android:name="com.air.crypto.presentation.coin_detail.CoinDetailFragment"
-        android:label="EventsFragment"
-        tools:layout="@layout/fragment_coin_detail"/>
+    <include app:graph="@navigation/coins_nav" />
 
 </navigation>
