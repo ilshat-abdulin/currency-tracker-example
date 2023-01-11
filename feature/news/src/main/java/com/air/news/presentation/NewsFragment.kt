@@ -2,11 +2,22 @@ package com.air.news.presentation
 
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.air.core.di.CoreComponentProvider
 import com.air.core_ui.base.BaseFragment
 import com.air.news.R
 import com.air.news.databinding.FragmentNewsBinding
+import com.air.news.di.DaggerNewsComponent
+import com.air.news.di.scopedComponent
 
 class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>(R.layout.fragment_news) {
+    private val coreComponent by lazy {
+        (requireActivity().application as CoreComponentProvider).coreComponent
+    }
+
+    private val newsComponent by scopedComponent {
+        DaggerNewsComponent.factory().create(coreComponent)
+    }
+
     override val binding by viewBinding(FragmentNewsBinding::bind)
     override val viewModel: NewsViewModel by viewModels()
 }
