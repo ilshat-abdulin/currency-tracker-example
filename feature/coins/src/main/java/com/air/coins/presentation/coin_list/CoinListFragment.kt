@@ -36,7 +36,6 @@ class CoinListFragment :
     private val coinsComponentHolder: CoinsComponentHolder by activityViewModels()
 
     override val binding by viewBinding(FragmentCoinListBinding::bind)
-
     override val viewModel: CoinListViewModel by viewModels { viewModelFactory }
 
     private val coinListAdapter by lazy {

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/fragment_coins"
         android:name="com.air.coins.presentation.coin_list.CoinListFragment"
-        android:label="EventsFragment"
+        android:label="CoinsFragment"
         tools:layout="@layout/fragment_coin_list">
         <action
             android:id="@+id/action_fragment_coins_to_fragment_coin_detail"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/fragment_coin_detail"
         android:name="com.air.coins.presentation.coin_detail.CoinDetailFragment"
-        android:label="EventsFragment"
+        android:label="CoinDetailFragment"
         tools:layout="@layout/fragment_coin_detail"/>
 
 </navigation>
