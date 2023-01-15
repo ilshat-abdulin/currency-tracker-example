@@ -7,6 +7,9 @@ import com.air.core_functional.map
 import com.air.core_functional.suspendFlatMap
 import com.air.coins.data.RemoteDataSource
 import com.air.coins.data_source.mapper.CoinMapper
+import com.air.coins.domain.model.CoinHistory
+import com.air.core_functional.Either
+import com.air.core_functional.Failure
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
@@ -14,7 +17,7 @@ internal class RemoteDataSourceImpl @Inject constructor(
     private val apiService: CoinsService,
     private val mapper: CoinMapper
 ) : RemoteDataSource {
-    override suspend fun getTopCoinList(): com.air.core_functional.Either<com.air.core_functional.Failure, CoinInfoModel> {
+    override suspend fun getTopCoinList(): Either<Failure, CoinInfoModel> {
         return executeRetrofitCall(Dispatchers.IO) {
             apiService.getTopCoinNames()
         }.map { names ->
@@ -33,7 +36,7 @@ internal class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCoinHistory(fSym: String): com.air.core_functional.Either<com.air.core_functional.Failure, com.air.coins.domain.model.CoinHistory> {
+    override suspend fun getCoinHistory(fSym: String): Either<Failure, CoinHistory> {
         return executeRetrofitCall(Dispatchers.IO) {
             apiService.getCoinHistory(fSym).data?.data.orEmpty()
         }.map { response ->

@@ -9,13 +9,14 @@ import retrofit2.http.Query
 interface NewsService {
 
     @GET("v2/news/")
-    suspend fun getTopCoinNames(
-        @Query(QUERY_PARAM_LANG) lang: String = "EN",
+    suspend fun getNews(
+        @Query(QUERY_PARAM_LANG) lang: String = PARAM_LANG_EN,
     ): NewsResponse
 
     companion object {
         operator fun invoke(retrofit: Retrofit): NewsService = retrofit.create()
 
         private const val QUERY_PARAM_LANG = "lang"
+        private const val PARAM_LANG_EN = "EN"
     }
 }

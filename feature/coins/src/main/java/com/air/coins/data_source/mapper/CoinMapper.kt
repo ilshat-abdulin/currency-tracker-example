@@ -27,8 +27,6 @@ internal class CoinMapper @Inject constructor() {
         fullName = fullName
     )
 
-
-
     fun mapDbModelToEntity(dbModel: CoinDbModel) = CoinItem(
         fromSymbol = dbModel.fromSymbol,
         toSymbol = dbModel.toSymbol,
@@ -40,8 +38,6 @@ internal class CoinMapper @Inject constructor() {
         imageUrl = dbModel.imageUrl,
         fullName = dbModel.fullName
     )
-
-
 
     private fun convertTimestampToTime(timestamp: Long?): String {
         if (timestamp == null) return ""

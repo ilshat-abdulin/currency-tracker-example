@@ -99,7 +99,7 @@ class CoinListFragment :
             }
         }
 
-        coinListAdapter.submitList(uiState.coins)
+        coinListAdapter.submitList(coins)
     }
 
     private fun handleError(failure: Failure) {
@@ -133,10 +133,6 @@ class CoinListFragment :
 
     private fun showSnackbar(message: String) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        fun newInstance() = CoinListFragment()
     }
 }
 

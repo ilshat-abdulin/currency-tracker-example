@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelStoreOwner
 
 /**
  * Used from "https://proandroiddev.com/how-to-store-scoped-dagger-components-in-android-applications-4f3e86a5e957"
- * By Alexander Sitnikov
  */
 private class ScopedComponentProperty<T>(
     private val storeOwner: ViewModelStoreOwner,
