@@ -110,7 +110,9 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>(R.layout.f
             }
         }
 
-        newsAdapter.submitList(news)
+        newsAdapter.submitList(news) {
+            binding.newsRecyclerView.smoothScrollToPosition(0)
+        }
     }
 
     private fun handleError(failure: Failure) {

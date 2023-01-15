@@ -92,26 +92,27 @@
 
     <TextView
         android:id="@+id/textViewPriceTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:gravity="end"
         android:text="@string/price"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/coinDetailGuideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/coinHistoryChart" />
 
     <TextView
         android:id="@+id/textViewCurrentPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginHorizontal="8dp"
         android:lines="1"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
         app:layout_constraintTop_toTopOf="@+id/textViewPriceTitle"
@@ -119,14 +120,16 @@
 
     <TextView
         android:id="@+id/textViewMinPerDayTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginHorizontal="8dp"
         android:text="@string/day_min"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
+        android:gravity="end"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/coinDetailGuideline"
         app:layout_constraintTop_toBottomOf="@id/textViewPriceTitle" />
 
@@ -134,11 +137,10 @@
         android:id="@+id/textViewMinPerDayPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginHorizontal="8dp"
         android:lines="1"
         android:textColor="@color/red"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
         app:layout_constraintTop_toTopOf="@id/textViewMinPerDayTitle"
@@ -146,26 +148,27 @@
 
     <TextView
         android:id="@+id/textViewMaxPerDayTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:gravity="end"
         android:text="@string/day_max"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/coinDetailGuideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewMinPerDayTitle" />
 
     <TextView
         android:id="@+id/textViewMaxPerDayPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginHorizontal="8dp"
         android:lines="1"
         android:textColor="@color/green"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
         app:layout_constraintTop_toTopOf="@id/textViewMaxPerDayTitle"
@@ -173,50 +176,54 @@
 
     <TextView
         android:id="@+id/textViewLastDealTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:gravity="end"
         android:text="@string/last_deal_text"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/coinDetailGuideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewMaxPerDayTitle" />
 
     <TextView
         android:id="@+id/textViewLastDealMarket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginHorizontal="8dp"
         android:textColor="@color/purple_700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
         app:layout_constraintTop_toTopOf="@id/textViewLastDealTitle"
         tools:text="Bitfinex" />
 
     <TextView
         android:id="@+id/textViewUpdateTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:gravity="end"
         android:text="@string/last_time_template"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/coinDetailGuideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewLastDealTitle" />
 
     <TextView
         android:id="@+id/textViewUpdateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginHorizontal="8dp"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/coinDetailGuideline"
-        app:layout_constraintTop_toTopOf="@id/textViewUpdateTitle"
+        app:layout_constraintBottom_toBottomOf="@id/textViewUpdateTitle"
         tools:text="09:32:55" />
 
     <androidx.constraintlayout.widget.Guideline

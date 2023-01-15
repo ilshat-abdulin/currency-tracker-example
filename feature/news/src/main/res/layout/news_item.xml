@@ -7,10 +7,11 @@
     android:paddingHorizontal="8dp"
     android:paddingVertical="8dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/newsImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay_cornerSize8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
