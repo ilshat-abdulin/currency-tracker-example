@@ -1,0 +1,17 @@
+<resources>
+    <string name="last_time_template">Время последнего обновления:</string>
+    <string name="symbols_template">%s %s</string>
+    <string name="price">Цена:</string>
+    <string name="day_min">Минимум за день:</string>
+    <string name="day_max">Максимум за день:</string>
+    <string name="last_deal_text">Последняя сделка:</string>
+    <string name="coin_logo">Логотип криптовалюты</string>
+    <string name="network_error">Отсутствует соединение!</string>
+    <string name="error_message">Что-то пошло не так</string>
+    <string name="coins_empty">Криптовалюты не найдены. Попробуйте позже.</string>
+    <string name="coins_loading">Криптовалюты загружаются…</string>
+    <string name="chart_empty">Данные диаграммы не найдены. Попробуйте позже.</string>
+    <string name="chart_loading">Диаграммы загружаются…</string>
+    <string name="menu_option_coins">Список</string>
+    <string name="menu_option_news">Новости</string>
+</resources>

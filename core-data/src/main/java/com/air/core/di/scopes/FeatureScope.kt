@@ -1,0 +1,7 @@
+package com.air.core.di.scopes
+
+import javax.inject.Scope
+
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class FeatureScope

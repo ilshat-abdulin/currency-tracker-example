@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="news_empty">Новости не найдены. Попробуйте позже.</string>
+    <string name="news_loading">Новости загружаются…</string>
+
+    <string name="now">сейчас</string>
+    <string name="minutes_ago_1">%d минута назад</string>
+    <string name="minutes_ago_2">%d минут назад</string>
+    <string name="minutes_ago_3">%d минуты назад</string>
+    <string name="hours_ago_1">%d час назад</string>
+    <string name="hours_ago_2">%d часа назад</string>
+    <string name="hours_ago_3">%d часов назад</string>
+
+    <string name="network_error">Отсутствует соединение!</string>
+    <string name="error_message">Что-то пошло не так</string>
+</resources>
