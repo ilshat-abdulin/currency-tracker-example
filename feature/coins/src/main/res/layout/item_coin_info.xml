@@ -83,10 +83,10 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:padding="1dp"
-            android:src="@drawable/disk"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/textViewUpdateTitle"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/disk" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/coinInfoGuideline"

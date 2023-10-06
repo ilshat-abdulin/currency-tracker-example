@@ -1,5 +1,6 @@
 package com.air.news.presentation
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -60,9 +61,13 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>(R.layout.f
     }
 
     private fun openWebPage(url: String) {
-        val webpage: Uri = Uri.parse(url)
-        val intent = Intent(Intent.ACTION_VIEW, webpage)
-        startActivity(intent)
+        try {
+            val webpage: Uri = Uri.parse(url)
+            val intent = Intent(Intent.ACTION_VIEW, webpage)
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+
+        }
     }
 
     private fun setUiEventListeners() {
@@ -114,9 +119,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>(R.layout.f
             }
         }
 
-        newsAdapter.submitList(news) {
-            binding.newsRecyclerView.smoothScrollToPosition(0)
-        }
+        newsAdapter.submitList(news)
     }
 
     private fun handleError(failure: Failure) {

@@ -12,13 +12,14 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.air.coins.R
 import com.air.coins.databinding.FragmentCoinDetailBinding
 import com.air.coins.di.CoinsComponentHolder
 import com.air.coins.presentation.coin_detail.model.CoinHistoryUi
 import com.air.core.di.CoreComponentProvider
 import com.air.core_ui.base.BaseFragment
-import com.air.core_ui.extensions.loadImage
 import com.air.core_ui.views.PriceValueChartMarker
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -31,7 +32,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 import javax.inject.Inject
 
 class CoinDetailFragment :
@@ -120,7 +123,10 @@ class CoinDetailFragment :
             textViewCoinFullName.text = coinDetail.fullName
             textViewCoinName.text = coinDetail.fromSymbol
             textViewUpdateTime.text = coinDetail.lastUpdate
-            imageViewCoinLogo.loadImage(coinDetail.imageUrl)
+            imageViewCoinLogo.load(coinDetail.imageUrl) {
+                transformations(CircleCropTransformation())
+                placeholder(R.drawable.disk)
+            }
         }
 
         updateChart(coinHistory)

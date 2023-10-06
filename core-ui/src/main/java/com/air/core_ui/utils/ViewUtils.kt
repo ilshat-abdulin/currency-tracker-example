@@ -1,17 +1,22 @@
-package com.air.core_ui.extensions
+package com.air.core_ui.utils
 
-import android.widget.ImageView
+import android.view.View
 import androidx.appcompat.widget.SearchView
-import com.air.core_ui.R
-import com.bumptech.glide.Glide
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-fun ImageView.loadImage(url: String) {
-    Glide.with(context)
-        .load(url)
-        .error(R.drawable.disk)
-        .into(this)
+private const val DEBOUNCE: Long = 300L
+private var isClickEnabled: Boolean = true
+private val enable: () -> Unit = { isClickEnabled = true }
+
+fun View.onClickWithDebounce(action: () -> Unit) {
+    this.setOnClickListener { v ->
+        if (isClickEnabled) {
+            isClickEnabled = false
+            v.postDelayed(enable, DEBOUNCE)
+            action.invoke()
+        }
+    }
 }
 
 fun SearchView.getQueryAsFlow(): Flow<String> {

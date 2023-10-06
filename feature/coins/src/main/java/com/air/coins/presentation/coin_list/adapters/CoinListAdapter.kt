@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.air.coins.R
 import com.air.coins.databinding.ItemCoinInfoBinding
 import com.air.coins.presentation.coin_list.model.CoinItemUi
-import com.air.core_ui.extensions.loadImage
 
-class CoinListAdapter(private val onCoinClickListener: (CoinItemUi) -> Unit) :
-    ListAdapter<CoinItemUi, CoinListAdapter.CoinViewHolder>(CoinDiffCallback()) {
+class CoinListAdapter(
+    private val onCoinClickListener: (CoinItemUi) -> Unit
+) : ListAdapter<CoinItemUi, CoinListAdapter.CoinViewHolder>(CoinDiffCallback()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
@@ -51,7 +53,9 @@ class CoinListAdapter(private val onCoinClickListener: (CoinItemUi) -> Unit) :
                 textViewFullName.text = coin.fullName
                 textViewPrice.text = coin.currentPrice
                 textViewUpdateTime.text = coin.lastUpdate
-                imageViewCoinLogo.loadImage(coin.imageUrl)
+                imageViewCoinLogo.load(coin.imageUrl) {
+                    placeholder(R.drawable.disk)
+                }
                 itemView.setOnClickListener { onCoinClickListener.invoke(coin) }
             }
         }
@@ -64,6 +68,7 @@ class CoinListAdapter(private val onCoinClickListener: (CoinItemUi) -> Unit) :
                     is CoinUpdates.PriceUpdate -> {
                         textViewPrice.text = coin.currentPrice
                     }
+
                     is CoinUpdates.TimeUpdate -> {
                         textViewUpdateTime.text = coin.lastUpdate
                     }
