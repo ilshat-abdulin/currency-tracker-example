@@ -11,9 +11,9 @@
         android:id="@+id/newsImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay_cornerSize8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay_cornerSize8dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -22,8 +22,8 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textStyle="bold"
         android:paddingHorizontal="8dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/newsPublishedTextView"
         app:layout_constraintStart_toEndOf="@id/newsImageView"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,21 +31,21 @@
 
     <TextView
         android:id="@+id/newsPublishedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/newsSourceNameTextView"
-        tools:text="6 hours ago"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        tools:text="6 hours ago" />
 
     <TextView
         android:id="@+id/newsNameTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:ellipsize="end"
-        android:padding="8dp"
         android:maxLines="3"
-        android:textStyle="bold"
+        android:padding="8dp"
         android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/newsImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/newsImageView"

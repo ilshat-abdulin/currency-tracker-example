@@ -1,11 +1,14 @@
 package com.air.coins.presentation.coin_list
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -60,6 +63,10 @@ class CoinListFragment :
         setUiEventListeners()
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+    }
+
     private fun setUiEventListeners() {
         binding.root.setOnRefreshListener {
             binding.root.isRefreshing = false
@@ -69,12 +76,14 @@ class CoinListFragment :
 
     private fun observeUiState() {
         viewModel.uiState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach { updateUi(it) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun observeUiEffects() {
         viewModel.uiEffects
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach {
                 when (it) {
                     is CoinListUiEffects.FailureEffect -> handleError(it.failure)

@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.air.core.di.CoreComponentProvider
@@ -80,12 +82,14 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>(R.layout.f
     private fun observeUiState() {
         viewModel.getNews()
         viewModel.uiState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach { updateUi(it) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun observeUiEffects() {
         viewModel.uiEffects
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach {
                 when (it) {
                     is NewsUiEffects.FailureEffect -> handleError(it.failure)

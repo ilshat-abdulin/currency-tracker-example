@@ -7,6 +7,8 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -78,6 +80,7 @@ class CoinDetailFragment :
 
     private fun observeUiState() {
         viewModel.uiState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach {
                 updateUi(it)
             }
@@ -86,6 +89,7 @@ class CoinDetailFragment :
 
     private fun observeUiEffects() {
         viewModel.uiEffects
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach {
                 when (it) {
                     is CoinDetailUiEffects.FailureEffect -> handleError(it.failure)
